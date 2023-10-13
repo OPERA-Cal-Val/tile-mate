@@ -5,8 +5,23 @@ This tool provides a tool to create continuous rasters of global publicly availa
 
 The API can be summarized as
 ```
+from tile_stitcher import get_raster_from_tiles
+
+bounds = [-120.55, 34.85, -120.25, 35.15]
+X, p = get_raster_from_tiles(bounds, tile_shortname='esa_world_cover_2021')
+
+# X is an c x m x n numpy array, where c is the number of channels specified by `count`
+# p is a dictionary (or a rasterio profile) including relevant GIS metadata; CRS is epsg:4326
 ```
+
 The rasters are returned in the global lat/lon projection `epsg:4326` and the API assumes that bounds are supplied in this format.
+
+```
+import rasterio
+
+with rasterio.open('esa_worlf_cover_2021_subset.tif', 'w', **p) as ds:
+   ds.write(X)
+```
 
 # Installation
 
