@@ -51,8 +51,15 @@ We have notebooks to demonstrate common usage:
 
 The datasets supported are:
 
-1. Pekel
-2. ESA World Cover (10 m) 2020 and 2021
+```
+In [1]: from tile_stitcher.stitcher import DATASET_SHORTNAMES
+
+In [2]: DATASET_SHORTNAMES
+Out[2]: ['peckel_water_occ_2021', 'esa_world_cover_2020', 'esa_world_cover_2021']
+```
+These correspond to
++ Pekel
++ ESA World Cover (10 m) 2020 and 2021
 
 # Dateline support
 
