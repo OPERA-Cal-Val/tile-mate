@@ -20,13 +20,6 @@ notebooks_plots/
 # Test output
 tests/out/
 
-# Data Files
-*.zip
-*.tar.gz
-*.dat
-# Include the tile vector data
-!dem_stitcher/data/*.geojson.zip
-
 # .pyenv files
 .python-version
 
