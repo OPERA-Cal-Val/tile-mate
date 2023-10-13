@@ -1,0 +1,113 @@
+# Deprecated Folder
+_deprecated/
+
+# OS Files
+**/.DS_Store
+**/.DS_Store?
+
+# vscode
+.vscode
+
+# env file
+.env
+
+# Vim files
+*.sw[mnop]
+
+# Notebooks used for presentations
+notebooks_plots/
+
+# Test output
+tests/out/
+
+# Data Files
+*.zip
+*.tar.gz
+*.dat
+# Include the tile vector data
+!dem_stitcher/data/*.geojson.zip
+
+# .pyenv files
+.python-version
+
+# pytest files
+.pytest_cache/
+
+# Jupyter files
+*.ipynb_checkpoints
+
+# Python build files
+build/
+
+# Rope Files
+.ropeproject/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Setuptools distribution folder.
+/dist/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+
+# Environments
+.env
+.envrc
+
+# Gdal and other image formats
+notebooks/*.tif
+*.xml
+notebooks/*.shp
+notebooks/*.sbx
+notebooks/*.sbn
+notebooks/*.shx
+notebooks/*.prj
+notebooks/*.qpj
+notebooks/*.dbf
+notebooks/*.cpg
+notebooks/*.msk
+notebooks/*.kmz
+notebooks/*.jpg
+notebooks/*.wld
+notebooks/*.geojson
+notebooks/**/*.tif
+
+# VRT
+*.vrt
+*.wgs84
+
+# Allow tif datacube to be added
+!dem_stitcher/data/geoid_18.tif
+
+# Log files
+*.log
+
+# Pickle Data
+*.pkl
+
+# Ignore pdf Files
+*.pdf
+
+# Ignore json
+*.json
+
+# Ignore Experimental Directories
+notebooks/experimental/
+tests/notebooks/
+
+# Notebooks
+*.ipynb
+!notebooks/Basic_Demo.ipynb
+!notebooks/Comparing_DEMs.ipynb
+!notebooks/Staging_a_DEM_for_ISCE2.ipynb
+!notebooks/organize_tile_data/0_Format_and_Organize_Data.ipynb
+!notebooks/organize_tile_data/1_Missing_glo-30_tiles.ipynb
+!notebooks/analysis_and_comparison/0_Alignment_with_original_DEM_tiles.ipynb
+!notebooks/analysis_and_comparison/1_Comparison_with_ISCE2_dem.ipynb
+!notebooks/Filling_in_missing_glo-30_tiles_with_glo-90_tiles.ipynb
+!notebooks/Merging_DEM_Tiles_into_a_VRT.ipynb
+
+notebooks/analysis_and_comparison/la_test/

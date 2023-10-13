@@ -1,0 +1,25 @@
+name: tile-stitcher
+channels:
+ - conda-forge
+dependencies:
+ - python>=3.10
+ - jupyter
+ - ipykernel
+ - rasterio
+ - shapely
+ - numpy
+ - matplotlib
+ - fiona
+ - geopandas
+ - gdal
+ - boto3
+ - pip
+ - pandas
+ - dem_stitcher
+ - pandera
+ - flake8
+ - flake8-blind-except
+ - flake8-builtins
+ - flake8-import-order
+ - pytest
+ - pytest-cov
