@@ -36,15 +36,12 @@ def get_tile_data(tile_key: str, year: int = None) -> gpd.GeoDataFrame:
 
     if (year is not None):
         if tile_key not in DATASETS_WITH_YEAR:
-            raise ValueError('Year is only supported '
-                             f'with {DATASETS_WITH_YEAR}')
+            raise NotImplementedError('Year is only supported '
+                                      f'with {DATASETS_WITH_YEAR}')
         if tile_key == 'hansen_annual_mosaic':
-
             def update_hansen_landsat_mosaic_url_p(url):
                 return update_hansen_landsat_mosaic_url(url, year)
             df_tiles.url = df_tiles.url.map(update_hansen_landsat_mosaic_url_p)
-        else:
-            raise NotImplementedError
     return df_tiles
 
 
@@ -70,7 +67,6 @@ def update_hansen_landsat_mosaic_url(url: str, year: int):
     return url_updated
 
 
-
 def get_urls_from_tile_df(extent: list[float],
                           df_tiles: gpd.GeoDataFrame) -> list[str]:
     bbox = box(*extent)
@@ -86,8 +82,9 @@ def get_additional_tile_metadata(urls: list[str],
                                  max_tile_tries: int = 10) -> dict:
     """Some tile sets may have missing data when they should not. Ideally we
     can remove said tiles from dataframe. However, in the case of Hansen
-    mosiacs, these errors seem to be year-to-year e.g. 2017 so are doing this
-    less elegant error handling"""
+    mosiacs, these errors seem to be year-to-year e.g. 2017 where the upper left
+    corner has tiles that are missing in contrast to subsequent years
+    so are doing this less elegant error handling to find a *present* tile"""
     for k, url in enumerate(urls):
         if k == max_tile_tries:
             metadata = {}
@@ -97,12 +94,13 @@ def get_additional_tile_metadata(urls: list[str],
                 tags = ds.tags()
                 try:
                     cmap = {k+1: ds.colormap(k+1) for k in range(ds.count)}
-                # no colormap yields a ValueError in Rasterio
+                # no colormap in existing dataset yields a ValueError in Rasterio
                 except ValueError:
                     cmap = {}
             metadata = {'tags': tags,
                         'colormap': cmap}
             break
+        # When dataset does not exist with given url
         except RasterioIOError:
             continue
     return metadata
