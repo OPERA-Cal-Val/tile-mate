@@ -35,10 +35,10 @@ or [Python virtual environments](https://docs.python.org/3/tutorial/venv.html).
 4. Install the library with `pip`
 
 ```
-python -m pip install dem_stitcher
+python -m pip install .
 ```
 
-Python 3.10+ is supported.
+You can also install for development with `python -m pip install -e .`. Python 3.10+ is supported.
 
 # Notebooks
 
