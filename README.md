@@ -55,11 +55,19 @@ The datasets supported are:
 In [1]: from tile_stitcher.stitcher import DATASET_SHORTNAMES
 
 In [2]: DATASET_SHORTNAMES
-Out[2]: ['peckel_water_occ_2021', 'esa_world_cover_2020', 'esa_world_cover_2021']
+Out[2]: ['peckel_water_occ_2021',
+ 'esa_world_cover_2020',
+ 'esa_world_cover_2021',
+ 'hansen_annual_mosaic',
+ 's1_coherence_2020']
 ```
 These correspond to
-+ Pekel
-+ ESA World Cover (10 m) 2020 and 2021
++ Pekel: https://global-surface-water.appspot.com/download
++ ESA World Cover (10 m) for 2020 and 2021: https://aws.amazon.com/marketplace/pp/prodview-7oorylcamixxc
++ Hansen annual mosaic: https://data.globalforestwatch.org/documents/941f17325a494ed78c4817f9bb20f33a/explore
++ S1 Coherence from December 2019 - Nov 2020: https://aws.amazon.com/marketplace/pp/prodview-iz6lnjbdlgcwa#resources
+
+See these [notebooks](notebooks/tile_creation) to see how these are organized.
 
 # Dateline support
 

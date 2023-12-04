@@ -16,7 +16,8 @@ GEOJSON_DICT = {
     'peckel_water_occ_2021': 'pekel_water_occurrence_2021.geojson.zip',
     'esa_world_cover_2020': 'esa_world_cover_2020.geojson.zip',
     'esa_world_cover_2021': 'esa_world_cover_2021.geojson.zip',
-    'hansen_annual_mosaic': 'hansen_landsat_mosaic_2022.geojson.zip'
+    'hansen_annual_mosaic': 'hansen_landsat_mosaic_2022.geojson.zip',
+    's1_coherence_2020': 's1_coherence_2020.geojson.zip'
 }
 DATASET_SHORTNAMES = list(GEOJSON_DICT.keys())
 
@@ -24,10 +25,15 @@ DATASETS_WITH_YEAR = ['hansen_annual_mosaic']
 HANSEN_MOSAIC_YEARS = [2000] + list(range(2013, 2023))
 CURRENT_HANSEN_VERSION = 10
 CURRENT_HANSEN_YEAR = 2022
+SEASONS = ['fall', 'winter', 'spring', 'summer']
+S1_TEMPORAL_BASELINE_DAYS = list(range(6, 49, 6))
 
 
 @lru_cache
-def get_tile_data(tile_key: str, year: int = None) -> gpd.GeoDataFrame:
+def get_tile_data(tile_key: str,
+                  year: int = None,
+                  season: str = None,
+                  temporal_baseline_days: int = None) -> gpd.GeoDataFrame:
     if tile_key not in DATASET_SHORTNAMES:
         raise TilesetNotSupported
     geojson_name = GEOJSON_DICT[tile_key]
@@ -42,6 +48,17 @@ def get_tile_data(tile_key: str, year: int = None) -> gpd.GeoDataFrame:
             def update_hansen_landsat_mosaic_url_p(url):
                 return update_hansen_landsat_mosaic_url(url, year)
             df_tiles.url = df_tiles.url.map(update_hansen_landsat_mosaic_url_p)
+    if tile_key == 's1_coherence_2020':
+        if any([var is None for var in [temporal_baseline_days, season]]):
+            raise ValueError(f'{tile_key} requires season and temporal baseline '
+                             'to be specified')
+        if season not in SEASONS:
+            raise ValueError(f'season keyword must be in {", ".join(SEASONS)}')
+        if temporal_baseline_days not in S1_TEMPORAL_BASELINE_DAYS:
+            raise ValueError(f'temporal_baseline_days must be in {", ".join(S1_TEMPORAL_BASELINE_DAYS)}')
+        ind_season = df_tiles.season == season
+        ind_tb = df_tiles.temporal_baseline_days == temporal_baseline_days
+        df_tiles = df_tiles[ind_tb & ind_season].reset_index(drop=True)
     return df_tiles
 
 
@@ -109,7 +126,9 @@ def get_additional_tile_metadata(urls: list[str],
 def get_raster_from_tiles(extent: list[float],
                           tile_shortname: str = None,
                           df_tiles: gpd.GeoDataFrame = None,
-                          year: int = None) -> tuple:
+                          year: int = None,
+                          season: str = None,
+                          temporal_baseline_days: int = None) -> tuple:
 
     if (tile_shortname is None) and (df_tiles is None):
         raise ValueError('Either "tile_shortname" or '
@@ -120,7 +139,10 @@ def get_raster_from_tiles(extent: list[float],
                          'both be provided')
 
     if isinstance(tile_shortname, str):
-        df_tiles = get_tile_data(tile_shortname, year=year)
+        df_tiles = get_tile_data(tile_shortname,
+                                 year=year,
+                                 temporal_baseline_days=temporal_baseline_days,
+                                 season=season)
 
     df_tiles = TILE_SCHEMA.validate(df_tiles)
 
