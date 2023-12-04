@@ -1,5 +1,3 @@
-import random
-
 import pytest
 
 from tile_stitcher import get_raster_from_tiles
