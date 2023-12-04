@@ -44,7 +44,8 @@ def get_tile_data(tile_key: str,
                   year: int = None,
                   season: str = None,
                   temporal_baseline_days: int = None) -> gpd.GeoDataFrame:
-    df_tiles = get_all_tile_data(tile_key)
+    # Because tile data is cached - we need to copy it.
+    df_tiles = get_all_tile_data(tile_key).copy()
 
     if (year is not None):
         if tile_key not in DATASETS_WITH_YEAR:
