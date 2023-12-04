@@ -59,6 +59,8 @@ def get_tile_data(tile_key: str,
         ind_season = df_tiles.season == season
         ind_tb = df_tiles.temporal_baseline_days == temporal_baseline_days
         df_tiles = df_tiles[ind_tb & ind_season].reset_index(drop=True)
+    if df_tiles.empty:
+        raise NoTileCoverage(f'{tile_key} has no tiles over requested area')
     return df_tiles
 
 
@@ -89,8 +91,6 @@ def get_urls_from_tile_df(extent: list[float],
     bbox = box(*extent)
     ind_inter = df_tiles.geometry.intersects(bbox)
     df_subset = df_tiles[ind_inter].reset_index(drop=True)
-    if df_subset.empty:
-        raise NoTileCoverage('There are no tiles over the requested area')
     urls = df_subset.url.tolist()
     return urls
 
