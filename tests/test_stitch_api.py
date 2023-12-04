@@ -20,7 +20,7 @@ def test_pekel_water_occ():
 
 
 @pytest.mark.parametrize("year",
-                         [HANSEN_MOSAIC_YEARS[k] for k in [0, 2, 4, 6, 10]]  # random.sample(HANSEN_MOSAIC_YEARS, 3)
+                         [HANSEN_MOSAIC_YEARS[k] for k in [0, 2, 4, 6, 10]]
                          )
 def test_hansen_datasets(year):
     # Note only getting 1 tile - these are large datasets!
