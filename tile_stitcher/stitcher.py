@@ -26,7 +26,17 @@ HANSEN_MOSAIC_YEARS = [2000] + list(range(2013, 2023))
 CURRENT_HANSEN_VERSION = 10
 CURRENT_HANSEN_YEAR = 2022
 SEASONS = ['fall', 'winter', 'spring', 'summer']
-S1_TEMPORAL_BASELINE_DAYS = list(range(6, 49, 6))
+S1_TEMPORAL_BASELINE_DAYS = [6, 12, 18, 24, 36, 48]
+
+
+@lru_cache
+def get_all_tile_data(tile_key: str) -> gpd.GeoDataFrame:
+    if tile_key not in DATASET_SHORTNAMES:
+        raise TilesetNotSupported
+    geojson_name = GEOJSON_DICT[tile_key]
+    geojson_path = DATA_DIR / geojson_name
+    df_tiles = read_geojson_gzip(geojson_path)
+    return df_tiles
 
 
 @lru_cache
@@ -34,11 +44,7 @@ def get_tile_data(tile_key: str,
                   year: int = None,
                   season: str = None,
                   temporal_baseline_days: int = None) -> gpd.GeoDataFrame:
-    if tile_key not in DATASET_SHORTNAMES:
-        raise TilesetNotSupported
-    geojson_name = GEOJSON_DICT[tile_key]
-    geojson_path = DATA_DIR / geojson_name
-    df_tiles = read_geojson_gzip(geojson_path)
+    df_tiles = get_all_tile_data(tile_key)
 
     if (year is not None):
         if tile_key not in DATASETS_WITH_YEAR:
