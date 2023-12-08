@@ -59,15 +59,17 @@ Out[2]: ['peckel_water_occ_2021',
  'esa_world_cover_2020',
  'esa_world_cover_2021',
  'hansen_annual_mosaic',
- 's1_coherence_2020']
+ 's1_coherence_2020',
+ 'cop_100_lulc_discrete']
 ```
 These correspond to
 + Pekel: https://global-surface-water.appspot.com/download
 + ESA World Cover (10 m) for 2020 and 2021: https://aws.amazon.com/marketplace/pp/prodview-7oorylcamixxc
 + Hansen annual mosaic: https://data.globalforestwatch.org/documents/941f17325a494ed78c4817f9bb20f33a/explore
 + S1 Coherence from December 2019 - Nov 2020: https://aws.amazon.com/marketplace/pp/prodview-iz6lnjbdlgcwa#resources
++ The copernicus 100 m LULC dataset from 2015 - 2019: https://land.copernicus.eu/global/content/annual-100m-global-land-cover-maps-available
 
-See these [notebooks](notebooks/tile_creation) to see how these are organized.
+See these [notebooks](notebooks/tile_creation) to see how these tiles are generated and organized.
 
 # Dateline support
 
