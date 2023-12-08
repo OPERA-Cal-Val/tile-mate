@@ -1,7 +1,8 @@
 import pytest
 
 from tile_stitcher import get_raster_from_tiles
-from tile_stitcher.stitcher import HANSEN_MOSAIC_YEARS, S1_TEMPORAL_BASELINE_DAYS, SEASONS, COP_100_YEARS
+from tile_stitcher.stitcher import (COP_100_YEARS, HANSEN_MOSAIC_YEARS,
+                                    S1_TEMPORAL_BASELINE_DAYS, SEASONS)
 
 
 def test_esa_world_cover():
@@ -42,6 +43,7 @@ def test_coherence_dataset(season, temporal_baseline_days):
                                  temporal_baseline_days=temporal_baseline_days)
     assert len(X.shape) == 3
 
+
 @pytest.mark.parametrize("year", COP_100_YEARS)
 def test_cop100_dataset(year: int):
     bounds = [-120.45, 34.85, -120.15, 34.95]
@@ -49,5 +51,3 @@ def test_cop100_dataset(year: int):
                                  tile_shortname='cop_100_lulc_discrete',
                                  year=year)
     assert len(X.shape) == 3
-
-
