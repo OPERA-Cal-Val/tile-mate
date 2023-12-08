@@ -17,12 +17,14 @@ GEOJSON_DICT = {
     'esa_world_cover_2020': 'esa_world_cover_2020.geojson.zip',
     'esa_world_cover_2021': 'esa_world_cover_2021.geojson.zip',
     'hansen_annual_mosaic': 'hansen_landsat_mosaic_2022.geojson.zip',
-    's1_coherence_2020': 's1_coherence_2020.geojson.zip'
+    's1_coherence_2020': 's1_coherence_2020.geojson.zip',
+    'cop_100_lulc_discrete': 'cop_100m_lulc_discrete_classes.geojson.zip'
 }
 DATASET_SHORTNAMES = list(GEOJSON_DICT.keys())
 
-DATASETS_WITH_YEAR = ['hansen_annual_mosaic']
+DATASETS_WITH_YEAR = ['hansen_annual_mosaic', 'cop_100_lulc_discrete']
 HANSEN_MOSAIC_YEARS = [2000] + list(range(2013, 2023))
+COP_100_YEARS = list(range(2015, 2020))
 CURRENT_HANSEN_VERSION = 10
 CURRENT_HANSEN_YEAR = 2022
 SEASONS = ['fall', 'winter', 'spring', 'summer']
@@ -55,6 +57,14 @@ def get_tile_data(tile_key: str,
             def update_hansen_landsat_mosaic_url_p(url):
                 return update_hansen_landsat_mosaic_url(url, year)
             df_tiles.url = df_tiles.url.map(update_hansen_landsat_mosaic_url_p)
+        if tile_key == 'cop_100_lulc_discrete':
+            print(df_tiles.year.unique())
+            df_tiles = df_tiles[df_tiles.year == year].reset_index(drop=True)
+            print(df_tiles.shape[0])
+    if year is None:
+        if tile_key in DATASETS_WITH_YEAR:
+            raise ValueError('year is required for tile lookup')
+
     if tile_key == 's1_coherence_2020':
         if any([var is None for var in [temporal_baseline_days, season]]):
             raise ValueError(f'{tile_key} requires season and temporal baseline '
