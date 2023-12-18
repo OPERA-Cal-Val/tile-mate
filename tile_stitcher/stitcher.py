@@ -58,9 +58,7 @@ def get_tile_data(tile_key: str,
                 return update_hansen_landsat_mosaic_url(url, year)
             df_tiles.url = df_tiles.url.map(update_hansen_landsat_mosaic_url_p)
         if tile_key == 'cop_100_lulc_discrete':
-            print(df_tiles.year.unique())
             df_tiles = df_tiles[df_tiles.year == year].reset_index(drop=True)
-            print(df_tiles.shape[0])
     if year is None:
         if tile_key in DATASETS_WITH_YEAR:
             raise ValueError('year is required for tile lookup')
