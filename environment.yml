@@ -1,4 +1,4 @@
-name: tile-stitcher
+name: tile-mate
 channels:
  - conda-forge
 dependencies:
