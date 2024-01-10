@@ -5,10 +5,12 @@ build-backend = 'setuptools.build_meta'
 [project]
 name = 'tile-stitcher'
 requires-python = '>=3.10'
-authors = [{name='Alexander Handwerger, Charlie Marshak, and OPERA Project Science Team'}]
+authors = [
+    { name = 'Alexander Handwerger, Charlie Marshak, and OPERA Project Science Team' },
+]
 description = 'Create rasters from global tiles'
-license = {text = 'Apache 2.0'}
-classifiers=[
+license = { text = 'Apache 2.0' }
+classifiers = [
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: Apache 2.0',
     'Natural Language :: English',
@@ -30,7 +32,7 @@ dependencies = [
     "numpy",
     "pandas",
     "pandera",
-    "shapely"
+    "shapely",
 ]
 
 [project.optional-dependencies]
@@ -56,9 +58,29 @@ include = ['tile_stitcher']
 exclude = ['notebooks*', 'tests*']
 
 [tool.setuptools.dynamic]
-readme = {file = ['README.md'], content-type = 'text/markdown'}
+readme = { file = ['README.md'], content-type = 'text/markdown' }
 
 [tool.setuptools_scm]
 
 [tool.ruff]
-line-length = 120
+line-length = 80
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".eggs",
+    ".git",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "build",
+    "dist",
+    "site-packages",
+]
+indent-width = 4
+
+[tool.ruff.format]
+quote-style="single"
