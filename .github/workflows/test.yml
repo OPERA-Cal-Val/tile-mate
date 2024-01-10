@@ -20,12 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: mamba-org/provision-with-micromamba@main
+      - uses: mamba-org/setup-micromamba@v1
         with:
-          environment-name: tile-mate
           environment-file: environment.yml
-          extra-specs: |
-            python=${{ matrix.python-version }}
+          create-args: >-
+            python=${{ matrix.python_version }}
 
 
       - name: Pytest in conda environment
