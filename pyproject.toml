@@ -53,7 +53,7 @@ include-package-data = true
 zip-safe = false
 
 [tool.setuptools.packages.find]
-include = ['tile_stitcher']
+include = ['src/tile_stitcher']
 exclude = ['notebooks*', 'tests*']
 
 [tool.setuptools.dynamic]
