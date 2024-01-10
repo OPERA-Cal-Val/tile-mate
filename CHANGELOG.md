@@ -7,13 +7,15 @@ and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.0.4]
-* `tile-mate` is new name of the project
-* Renames project as `tile-mate`/`tile_mate`
+* `tile-mate` is new name of the project - old name `tile-stitcher` was too similar to existing projects on PyPI
+* Uses `src` layout per: https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/
+* Hopefully on PyPI
 
 ## [0.0.3]
 * Fixes PyPI workflow by removing unrecognized `License :: OSI Approved :: Apache 2.0' is not a valid classifier.`
 * Fixes dependencies in pyproject.toml
 * Updates readme installation instruction.
+* Still not on PyPI due to similarity of the name
 
 ## [0.0.2]
 * Fixes automated workflows
