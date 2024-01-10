@@ -9,7 +9,7 @@ authors = [
     { name = 'Alexander Handwerger, Charlie Marshak, and OPERA Project Science Team' },
 ]
 description = 'Create rasters from global tiles'
-license = {text = 'Apache-2.0'}
+license = { text = 'Apache-2.0' }
 classifiers = [
     'Intended Audience :: Science/Research',
     'Natural Language :: English',
@@ -54,8 +54,8 @@ zip-safe = false
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ['src/tile_mate']
-exclude = ['notebooks*', 'tests*']
+include = ["src/tile_mate"]
+exclude = ["notebooks*", "tests*"]
 
 [tool.setuptools.dynamic]
 readme = { file = ['README.md'], content-type = 'text/markdown' }
