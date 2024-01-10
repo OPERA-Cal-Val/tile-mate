@@ -14,8 +14,8 @@ dependencies:
  - gdal
  - boto3
  - pip
+ - dem_stitcher>=2.5.4
  - pandas
- - dem_stitcher
  - pandera
  - flake8
  - flake8-blind-except
@@ -23,3 +23,4 @@ dependencies:
  - flake8-import-order
  - pytest
  - pytest-cov
+ - ruff
