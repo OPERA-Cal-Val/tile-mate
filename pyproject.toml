@@ -63,7 +63,7 @@ readme = { file = ['README.md'], content-type = 'text/markdown' }
 [tool.setuptools_scm]
 
 [tool.ruff]
-line-length = 80
+line-length = 120
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -83,4 +83,4 @@ exclude = [
 indent-width = 4
 
 [tool.ruff.format]
-quote-style="single"
+quote-style = "single"

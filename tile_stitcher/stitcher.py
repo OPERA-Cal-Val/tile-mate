@@ -53,9 +53,7 @@ def get_tile_data(
 
     if year is not None:
         if tile_key not in DATASETS_WITH_YEAR:
-            raise NotImplementedError(
-                'Year is only supported ' f'with {DATASETS_WITH_YEAR}'
-            )
+            raise NotImplementedError('Year is only supported ' f'with {DATASETS_WITH_YEAR}')
         if tile_key == 'hansen_annual_mosaic':
 
             def update_hansen_landsat_mosaic_url_p(url):
@@ -70,16 +68,11 @@ def get_tile_data(
 
     if tile_key == 's1_coherence_2020':
         if any([var is None for var in [temporal_baseline_days, season]]):
-            raise ValueError(
-                f'{tile_key} requires season and temporal baseline '
-                'to be specified'
-            )
+            raise ValueError(f'{tile_key} requires season and temporal baseline ' 'to be specified')
         if season not in SEASONS:
             raise ValueError(f'season keyword must be in {", ".join(SEASONS)}')
         if temporal_baseline_days not in S1_TEMPORAL_BASELINE_DAYS:
-            raise ValueError(
-                f'temporal_baseline_days must be in {", ".join(S1_TEMPORAL_BASELINE_DAYS)}'
-            )
+            raise ValueError(f'temporal_baseline_days must be in {", ".join(S1_TEMPORAL_BASELINE_DAYS)}')
         ind_season = df_tiles.season == season
         ind_tb = df_tiles.temporal_baseline_days == temporal_baseline_days
         df_tiles = df_tiles[ind_tb & ind_season].reset_index(drop=True)
@@ -98,23 +91,18 @@ def update_hansen_landsat_mosaic_url(url: str, year: int):
         # Gets the "last_00N_040W.tif" portion of the url
         url_end = url[-17:]
         url_updated = (
-            'https://storage.googleapis.com/earthenginepartners-hansen/'
-            f'GFC{year}/Hansen_GFC{year}_{url_end}'
+            'https://storage.googleapis.com/earthenginepartners-hansen/' f'GFC{year}/Hansen_GFC{year}_{url_end}'
         )
     else:
         year_diff = CURRENT_HANSEN_YEAR - year
         version_updated = CURRENT_HANSEN_VERSION - year_diff
         url_updated = url.replace(str(CURRENT_HANSEN_YEAR), str(year))
-        url_updated = url_updated.replace(
-            f'v1.{CURRENT_HANSEN_VERSION}', f'v1.{version_updated}'
-        )
+        url_updated = url_updated.replace(f'v1.{CURRENT_HANSEN_VERSION}', f'v1.{version_updated}')
 
     return url_updated
 
 
-def get_urls_from_tile_df(
-    extent: list[float], df_tiles: gpd.GeoDataFrame
-) -> list[str]:
+def get_urls_from_tile_df(extent: list[float], df_tiles: gpd.GeoDataFrame) -> list[str]:
     bbox = box(*extent)
     ind_inter = df_tiles.geometry.intersects(bbox)
     df_subset = df_tiles[ind_inter].reset_index(drop=True)
@@ -122,9 +110,7 @@ def get_urls_from_tile_df(
     return urls
 
 
-def get_additional_tile_metadata(
-    urls: list[str], max_tile_tries: int = 10
-) -> dict:
+def get_additional_tile_metadata(urls: list[str], max_tile_tries: int = 10) -> dict:
     """Some tile sets may have missing data when they should not. Ideally we
     can remove said tiles from dataframe. However, in the case of Hansen
     mosiacs, these errors seem to be year-to-year e.g. 2017 where the upper left
@@ -159,14 +145,10 @@ def get_raster_from_tiles(
     temporal_baseline_days: int = None,
 ) -> tuple:
     if (tile_shortname is None) and (df_tiles is None):
-        raise ValueError(
-            'Either "tile_shortname" or "df_tiles" must be provided'
-        )
+        raise ValueError('Either "tile_shortname" or "df_tiles" must be provided')
 
     if (tile_shortname is not None) and (df_tiles is not None):
-        raise ValueError(
-            '"tile_shortname" and "df_tiles" cannot both be provided'
-        )
+        raise ValueError('"tile_shortname" and "df_tiles" cannot both be provided')
 
     if isinstance(tile_shortname, str):
         df_tiles = get_tile_data(

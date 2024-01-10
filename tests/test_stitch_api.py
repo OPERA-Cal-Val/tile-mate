@@ -24,15 +24,11 @@ def test_pekel_water_occ():
     assert len(X.shape) == 3
 
 
-@pytest.mark.parametrize(
-    'year', [HANSEN_MOSAIC_YEARS[k] for k in [0, 2, 4, 6, 10]]
-)
+@pytest.mark.parametrize('year', [HANSEN_MOSAIC_YEARS[k] for k in [0, 2, 4, 6, 10]])
 def test_hansen_datasets(year):
     # Note only getting 1 tile - these are large datasets!
     bounds = [-120.45, 34.85, -120.15, 34.95]
-    X, _ = get_raster_from_tiles(
-        bounds, tile_shortname='hansen_annual_mosaic', year=year
-    )
+    X, _ = get_raster_from_tiles(bounds, tile_shortname='hansen_annual_mosaic', year=year)
     assert len(X.shape) == 3
 
 
@@ -53,7 +49,5 @@ def test_coherence_dataset(season, temporal_baseline_days):
 @pytest.mark.parametrize('year', COP_100_YEARS)
 def test_cop100_dataset(year: int):
     bounds = [-120.45, 34.85, -120.15, 34.95]
-    X, _ = get_raster_from_tiles(
-        bounds, tile_shortname='cop_100_lulc_discrete', year=year
-    )
+    X, _ = get_raster_from_tiles(bounds, tile_shortname='cop_100_lulc_discrete', year=year)
     assert len(X.shape) == 3
