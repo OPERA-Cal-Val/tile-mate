@@ -6,8 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.3]
+* Fixes PyPI workflow by removing unrecognized `License :: OSI Approved :: Apache 2.0' is not a valid classifier.`
+* Fixes dependencies in pyproject.toml
+* Updates readme installation instruction.
+* On PyPI
+
 ## [0.0.2]
-* Fixes automated workflows (first on PyPI)
+* Fixes automated workflows
+* Still not on PyPI
 
 ## [0.0.1]
 (not on PyPI)
