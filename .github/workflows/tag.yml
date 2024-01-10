@@ -1,4 +1,4 @@
-name: Tag version
+name: Tag Version on Main
 
 on:
   push:
