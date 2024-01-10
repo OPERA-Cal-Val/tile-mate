@@ -53,6 +53,7 @@ include-package-data = true
 zip-safe = false
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ['src/tile_mate']
 exclude = ['notebooks*', 'tests*']
 
