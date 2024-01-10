@@ -1,4 +1,4 @@
-name: Is PR labeled?
+name: Check PR Labeled
 
 on:
   pull_request:

@@ -9,7 +9,7 @@ authors = [
     { name = 'Alexander Handwerger, Charlie Marshak, and OPERA Project Science Team' },
 ]
 description = 'Create rasters from global tiles'
-license = { text = 'Apache 2.0' }
+license = {text = 'Apache-2.0'}
 classifiers = [
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: Apache 2.0',
