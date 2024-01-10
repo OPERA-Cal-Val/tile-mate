@@ -13,4 +13,4 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
     - S1 coherence from 2020;  
     - Hansen annual mosaics 2000, 2013 - present
     - Cop 100m Landcover 2015-2019
-* Includes workflows for static analysis and integration testing.
+* Includes workflows for static analysis, release to PyPI, and integration testing.
