@@ -29,16 +29,17 @@ In order to easily manage dependencies, we recommend using dedicated project env
 via [Anaconda/Miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
 or [Python virtual environments](https://docs.python.org/3/tutorial/venv.html).
 
-1. Clone the repository and navigate to it in the ternmal.
-2. Install the environment with `mamba env update -f environment.yaml`
-3. Activate the environment `conda activate tile-stitcher`
-4. Install the library with `pip`
+1. Install the environment in this repository with `mamba env update -f environment.yml`
+2. Activate the environment `conda activate tile-stitcher`
+3. Install the library with `pip` via `pip install tile-stitcher`
+
+For development, clone the repository and navigate to it in the terminal.
 
 ```
-python -m pip install .
+python -m pip install . -e
 ```
 
-You can also install for development with `python -m pip install -e .`. Python 3.10+ is supported.
+Python 3.10+ is supported.
 
 # Notebooks
 
