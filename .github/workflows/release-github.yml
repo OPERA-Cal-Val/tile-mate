@@ -13,4 +13,4 @@ jobs:
       develop_branch: dev
       sync_pr_label: team-bot
     secrets:
-      USER_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
+      USER_TOKEN: ${{ secrets.OPERA_PST_GITHUB_TOKEN }}
