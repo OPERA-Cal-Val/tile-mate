@@ -12,7 +12,6 @@ description = 'Create rasters from global tiles'
 license = {text = 'Apache-2.0'}
 classifiers = [
     'Intended Audience :: Science/Research',
-    'License :: OSI Approved :: Apache 2.0',
     'Natural Language :: English',
     'Operating System :: OS Independent',
     'Programming Language :: Python :: 3',
@@ -26,13 +25,13 @@ dependencies = [
     "boto3",
     "rasterio",
     "tqdm",
-    "gdal",
     "geopandas",
     "matplotlib",
     "numpy",
     "pandas",
     "pandera",
     "shapely",
+    "dem-stitcher>=2.5.4",
 ]
 
 [project.optional-dependencies]
