@@ -1,7 +1,7 @@
 import pytest
 
-from tile_stitcher import get_raster_from_tiles
-from tile_stitcher.stitcher import (
+from tile_mate import get_raster_from_tiles
+from tile_mate.stitcher import (
     COP_100_YEARS,
     HANSEN_MOSAIC_YEARS,
     S1_TEMPORAL_BASELINE_DAYS,

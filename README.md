@@ -1,11 +1,11 @@
-# tile-stitcher
+# tile-mate
 
 This tool provides a tool to create continuous rasters of global publicly available tiles such as Pekel Occurence and ESA 10 m land cover. This is a simpler cousin of [`dem-stitcher`](https://github.com/ACCESS-Cloud-Based-InSAR/dem-stitcher) without the need for basic post-processing (e.g. fractional pixel translation and vertical datum transformations).
 
 
 The API can be summarized as
 ```
-from tile_stitcher import get_raster_from_tiles
+from tile_mate import get_raster_from_tiles
 
 bounds = [-120.55, 34.85, -120.25, 35.15]
 X, p = get_raster_from_tiles(bounds, tile_shortname='esa_world_cover_2021')
@@ -53,7 +53,7 @@ We have notebooks to demonstrate common usage:
 The datasets supported are:
 
 ```
-In [1]: from tile_stitcher.stitcher import DATASET_SHORTNAMES
+In [1]: from tile_mate.stitcher import DATASET_SHORTNAMES
 
 In [2]: DATASET_SHORTNAMES
 Out[2]: ['peckel_water_occ_2021',

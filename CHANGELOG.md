@@ -19,7 +19,7 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [0.0.1]
 (not on PyPI)
 
-* First release of `tile_stitcher` with following datasets (See readme for links):
+* First release of `tile_mate` with following datasets (See readme for links):
     - ESA 10m worldcover 2020 and 2021; 
     - Pekel 30m water occurence 2021; 
     - S1 coherence from 2020;  
