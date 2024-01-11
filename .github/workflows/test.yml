@@ -17,4 +17,4 @@ jobs:
     with:
       local_package_name: tile_mate
       python_versions: >-
-        ["3.9", "3.10"]
+        ["3.10", "3.11", "3.12"]
