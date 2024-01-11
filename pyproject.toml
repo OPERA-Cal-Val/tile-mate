@@ -3,7 +3,7 @@ requires = ['setuptools>=60', 'setuptools-scm>=8.0']
 build-backend = 'setuptools.build_meta'
 
 [project]
-name = 'tile-mate'
+name = 'tile_mate'
 requires-python = '>=3.10'
 authors = [
     { name = 'Alexander Handwerger, Charlie Marshak, and OPERA Project Science Team' },
@@ -54,7 +54,6 @@ zip-safe = false
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["src/tile_mate"]
 exclude = ["notebooks*", "tests*"]
 
 [tool.setuptools.dynamic]
