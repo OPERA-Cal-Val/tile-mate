@@ -3,13 +3,13 @@ requires = ['setuptools>=60', 'setuptools-scm>=8.0']
 build-backend = 'setuptools.build_meta'
 
 [project]
-name = 'tile-stitcher'
+name = 'tile-mate'
 requires-python = '>=3.10'
 authors = [
     { name = 'Alexander Handwerger, Charlie Marshak, and OPERA Project Science Team' },
 ]
 description = 'Create rasters from global tiles'
-license = {text = 'Apache-2.0'}
+license = { text = 'Apache-2.0' }
 classifiers = [
     'Intended Audience :: Science/Research',
     'Natural Language :: English',
@@ -45,16 +45,16 @@ develop = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/OPERA-Cal-Val/tile-stitcher"
-"Bug Tracker" = "https://github.com/OPERA-Cal-Val/tile-stitcher/issues"
+Homepage = "https://github.com/OPERA-Cal-Val/tile-mate"
+"Bug Tracker" = "https://github.com/OPERA-Cal-Val/tile-mate/issues"
 
 [tool.setuptools]
 include-package-data = true
 zip-safe = false
 
 [tool.setuptools.packages.find]
-include = ['tile_stitcher']
-exclude = ['notebooks*', 'tests*']
+where = ["src"]
+exclude = ["notebooks*", "tests*"]
 
 [tool.setuptools.dynamic]
 readme = { file = ['README.md'], content-type = 'text/markdown' }
