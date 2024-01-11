@@ -83,3 +83,6 @@ __pycache__/
 
 # Ignore json
 *.json
+
+# Coverage
+*.coverage
