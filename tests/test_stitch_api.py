@@ -51,3 +51,9 @@ def test_cop100_dataset(year: int):
     bounds = [-120.45, 34.85, -120.15, 34.95]
     X, _ = get_raster_from_tiles(bounds, tile_shortname='cop_100_lulc_discrete', year=year)
     assert len(X.shape) == 3
+
+
+def test_hand():
+    bounds = [-120.45, 34.85, -120.15, 34.95]
+    X, _ = get_raster_from_tiles(bounds, tile_shortname='hand')
+    assert len(X.shape) == 3
