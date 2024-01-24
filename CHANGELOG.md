@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.5]
+* Add height above nearest drainage from ASF Tiles: https://github.com/asjohnston-asf/agu-2022-notebooks/blob/main/hand-notebook.ipynb
+
 ## [0.0.4]
 * `tile-mate` is new name of the project - old name `tile-stitcher` was too similar to existing projects on PyPI
 * Uses `src` layout per: https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/
