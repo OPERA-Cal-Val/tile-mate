@@ -1,5 +1,11 @@
 # tile-mate
 
+[![PyPI license](https://img.shields.io/pypi/l/tile-mate.svg)](https://pypi.python.org/pypi/tile-mate/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/tile-mate.svg)](https://pypi.python.org/pypi/tile-mate/)
+[![PyPI version](https://img.shields.io/pypi/v/tile-mate.svg)](https://pypi.python.org/pypi/tile-mate/)
+[![Conda version](https://img.shields.io/conda/vn/conda-forge/tile_mate)](https://anaconda.org/conda-forge/tile_mate)
+[![Conda platforms](https://img.shields.io/conda/pn/conda-forge/tile_mate)](https://anaconda.org/conda-forge/tile_mate)
+
 This tool provides a tool to create continuous rasters of global publicly available tiles such as Pekel Occurence and ESA 10 m land cover. This is a simpler cousin of [`dem-stitcher`](https://github.com/ACCESS-Cloud-Based-InSAR/dem-stitcher) without the need for basic post-processing (e.g. fractional pixel translation and vertical datum transformations).
 
 
