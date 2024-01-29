@@ -4,7 +4,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = 'tile-mate'
-requires-python = '>=3.10'
+requires-python = '>=3.9'
 authors = [
     { name = 'Alexander Handwerger, Charlie Marshak, and OPERA Project Science Team' },
 ]
@@ -15,6 +15,7 @@ classifiers = [
     'Natural Language :: English',
     'Operating System :: OS Independent',
     'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
 ]
