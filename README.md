@@ -62,7 +62,7 @@ The datasets supported are:
 In [1]: from tile_mate.stitcher import DATASET_SHORTNAMES
 
 In [2]: DATASET_SHORTNAMES
-Out[2]: ['peckel_water_occ_2021',
+Out[2]: ['pekel_water_occ_2021',
  'esa_world_cover_2020',
  'esa_world_cover_2021',
  'hansen_annual_mosaic',
