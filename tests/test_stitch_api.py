@@ -20,7 +20,7 @@ def test_esa_world_cover():
 
 def test_pekel_water_occ():
     bounds = [-120.45, 34.85, -120.15, 35.15]
-    X, _ = get_raster_from_tiles(bounds, tile_shortname='peckel_water_occ_2021')
+    X, _ = get_raster_from_tiles(bounds, tile_shortname='pekel_water_occ_2021')
     assert len(X.shape) == 3
 
 

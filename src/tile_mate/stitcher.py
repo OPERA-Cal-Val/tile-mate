@@ -13,7 +13,7 @@ from .tile_model import TILE_SCHEMA
 
 DATA_DIR = Path(__file__).resolve().parent / 'data'
 GEOJSON_DICT = {
-    'peckel_water_occ_2021': 'pekel_water_occurrence_2021.geojson.zip',
+    'pekel_water_occ_2021': 'pekel_water_occurrence_2021.geojson.zip',
     'esa_world_cover_2020': 'esa_world_cover_2020.geojson.zip',
     'esa_world_cover_2021': 'esa_world_cover_2021.geojson.zip',
     'hansen_annual_mosaic': 'hansen_landsat_mosaic_2022.geojson.zip',
