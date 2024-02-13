@@ -35,14 +35,23 @@ In order to easily manage dependencies, we recommend using dedicated project env
 via [Anaconda/Miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
 or [Python virtual environments](https://docs.python.org/3/tutorial/venv.html).
 
-1. Install the environment in this repository with `mamba env update -f environment.yml`
-2. Activate the environment `conda activate tile-mate`
-3. Install the library with `pip` via `pip install tile-mate`
-
-For development, clone the repository and navigate to it in the terminal.
-
+You can install the package with `conda`/`mamba` using:
 ```
-python -m pip install . -e
+mamba install tile_mate
+```
+or
+```
+pip install tile-mate
+```
+Alternatively, you can clone the repository and manage the environment using the `environment.yml` file provided.
+
+1. `mamba env update -f environment.yml`
+2. Activate the environment `conda activate tile-mate`
+3. Install the library with `pip` via `pip install tile-mate`.
+
+For development, use `pip` with `-e` (editable) mode:
+```
+python -m pip install -e .
 ```
 
 Python 3.10+ is supported.
