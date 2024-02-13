@@ -25,7 +25,7 @@ The rasters are returned in the global lat/lon projection `epsg:4326` and the AP
 ```
 import rasterio
 
-with rasterio.open('esa_worlf_cover_2021_subset.tif', 'w', **p) as ds:
+with rasterio.open('esa_world_cover_2021_subset.tif', 'w', **p) as ds:
    ds.write(X)
 ```
 
