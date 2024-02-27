@@ -9,7 +9,9 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [0.0.8]
 
 ## Added
+* Test (and fix bugs) in exception handling related to coverage, tile set names available, and keyword arguments.
 * Hansen datasets including `treecover 2000`, `gain`, `lossyear` as indicated here: https://data.globalforestwatch.org/documents/941f17325a494ed78c4817f9bb20f33a/explore
+
 
 ## [0.0.8]
 * Fix typo in `pekel_water_occ_2021` and other instances of misspelled name: `peckel` --> `pekel`
