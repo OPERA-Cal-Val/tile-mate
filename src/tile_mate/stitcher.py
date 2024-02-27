@@ -22,6 +22,7 @@ GEOJSON_DICT = {
     'hansen_treecover_2000': 'hansen_landsat_mosaic_2022.geojson.zip',
     's1_coherence_2020': 's1_coherence_2020.geojson.zip',
     'cop_100_lulc_discrete': 'cop_100m_lulc_discrete_classes.geojson.zip',
+    'radd_deforestation_alerts_2022': 'radd_deforestation_alerts_2022.geojson.zip',
     'hand': 'asf_hand_2021.geojson.zip',
 }
 DATASET_SHORTNAMES = list(GEOJSON_DICT.keys())

@@ -6,12 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.8]
+## [0.0.9]
 
 ## Added
-* Test (and fix bugs) in exception handling related to coverage, tile set names available, and keyword arguments.
-* Hansen datasets including `treecover 2000`, `gain`, `lossyear` as indicated here: https://data.globalforestwatch.org/documents/941f17325a494ed78c4817f9bb20f33a/explore
+* Hansen datasets including `treecover_2000`, `gain`, `lossyear` (these are the tile shortnames). Infomration on these tiles can be found here: https://data.globalforestwatch.org/documents/941f17325a494ed78c4817f9bb20f33a/explore
+* RADD Deforestation Alerts from 2022 (with shortname `radd_deforestation_alerts_2022`): https://data.globalforestwatch.org/datasets/gfw::deforestation-alerts-radd/about
 
+## Fixed
+* Test (and fix bugs) in exception handling related to tile coverage, tile sets available, and keyword arguments for certain tiles (e.g. year and season).
 
 ## [0.0.8]
 * Fix typo in `pekel_water_occ_2021` and other instances of misspelled name: `peckel` --> `pekel`
