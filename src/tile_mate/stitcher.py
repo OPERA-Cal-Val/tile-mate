@@ -71,11 +71,14 @@ def get_tile_data(
                 return update_hansen_landsat_mosaic_url(url, year)
             df_tiles.url = df_tiles.url.map(update_hansen_landsat_mosaic_url_p)
         if tile_key == 'cop_100_lulc_discrete':
+            if year not in COP_100_YEARS:
+                cop_100_years_str = list(map(str, COP_100_YEARS))
+                raise ValueError(f'Year must be in {cop_100_years_str}')
             df_tiles = df_tiles[df_tiles.year == year].reset_index(drop=True)
 
     if year is None:
         if tile_key in DATASETS_WITH_YEAR:
-            raise ValueError('year is required for tile lookup')
+            raise ValueError('Year is required for tile lookup')
 
     if tile_key == 's1_coherence_2020':
         if any([var is None for var in [temporal_baseline_days, season]]):
@@ -83,7 +86,8 @@ def get_tile_data(
         if season not in SEASONS:
             raise ValueError(f'season keyword must be in {", ".join(SEASONS)}')
         if temporal_baseline_days not in S1_TEMPORAL_BASELINE_DAYS:
-            raise ValueError(f'temporal_baseline_days must be in {", ".join(S1_TEMPORAL_BASELINE_DAYS)}')
+            tb_days_str = list(map(str, S1_TEMPORAL_BASELINE_DAYS))
+            raise ValueError(f'temporal_baseline_days must be in {", ".join(tb_days_str)}')
         ind_season = df_tiles.season == season
         ind_tb = df_tiles.temporal_baseline_days == temporal_baseline_days
         df_tiles = df_tiles[ind_tb & ind_season].reset_index(drop=True)
@@ -94,7 +98,8 @@ def get_tile_data(
 
 def update_hansen_landsat_mosaic_url(url: str, year: int):
     if year not in HANSEN_MOSAIC_YEARS:
-        raise ValueError(f'Year must be in {", ".join(HANSEN_MOSAIC_YEARS)}')
+        hansen_years_str = list(map(str, HANSEN_MOSAIC_YEARS))
+        raise ValueError(f'Year must be in {", ".join(hansen_years_str)}')
 
     if year == 2000:
         url_updated = url.replace('last', 'first')
