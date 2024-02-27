@@ -76,7 +76,12 @@ def test_cop100_dataset(year: int):
     ],
 )
 def test_no_kwarg_datasets(dataset_shortname):
-    bounds = [-120.45, 34.85, -120.15, 34.95]
+    if dataset_shortname == 'radd_deforestation_alerts_2022':
+        # Must be in Southern hemisphere near equator; RADD has limited coverage
+        bounds = [-53, -2, -52.95, -1.95]
+    else:
+        # Los Angeles Area
+        bounds = [-120.45, 34.85, -120.15, 34.95]
     X, _ = get_raster_from_tiles(bounds, tile_shortname=dataset_shortname)
     assert len(X.shape) == 3
 
