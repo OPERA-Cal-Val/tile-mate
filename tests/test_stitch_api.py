@@ -65,7 +65,7 @@ def test_cop100_dataset(year: int):
 
 
 @pytest.mark.parametrize(
-    'dataset_shortname', ['hansen_gain', 'hansen_tree', 'hansen_lossyear', 'hand', 'pekel_water_occ_2021']
+    'dataset_shortname', ['hansen_gain', 'hansen_treecover_2000', 'hansen_lossyear', 'hand', 'pekel_water_occ_2021']
 )
 def test_no_kwarg_datasets(dataset_shortname):
     bounds = [-120.45, 34.85, -120.15, 34.95]

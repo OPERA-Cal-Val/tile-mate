@@ -65,7 +65,7 @@ def get_tile_data(
 
     if year is not None:
         if tile_key not in DATASETS_WITH_YEAR:
-            raise NotImplementedError('Year is only supported ' f'with {DATASETS_WITH_YEAR}')
+            raise ValueError('Year is only supported ' f'with {DATASETS_WITH_YEAR}')
         if tile_key == 'hansen_annual_mosaic':
             def update_hansen_landsat_mosaic_url_p(url):
                 return update_hansen_landsat_mosaic_url(url, year)
