@@ -43,7 +43,6 @@ def test_valid_year_exceptions():
         X, _ = get_raster_from_tiles(bounds, tile_shortname='cop_100_lulc_discrete', year=2002)
 
 
-
 @pytest.mark.parametrize('season', SEASONS)
 @pytest.mark.parametrize('temporal_baseline_days', S1_TEMPORAL_BASELINE_DAYS)
 def test_coherence_dataset(season, temporal_baseline_days):
