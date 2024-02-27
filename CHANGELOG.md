@@ -7,6 +7,11 @@ and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.0.8]
+
+## Added
+* Hansen datasets including `treecover 2000`, `gain`, `lossyear` as indicated here: https://data.globalforestwatch.org/documents/941f17325a494ed78c4817f9bb20f33a/explore
+
+## [0.0.8]
 * Fix typo in `pekel_water_occ_2021` and other instances of misspelled name: `peckel` --> `pekel`
 
 ## [0.0.7]
