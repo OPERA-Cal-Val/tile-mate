@@ -56,19 +56,21 @@ def get_tile_data(
     df_tiles = get_all_tile_data(tile_key).copy()
 
     if tile_key in ['hansen_treecover_2000', 'hansen_lossyear', 'hansen_gain']:
+
         def toggle_hansen_url(url: str) -> str:
-            url_lut = {'hansen_treecover_2000': 'treecover2000',
-                       'hansen_lossyear': 'lossyear',
-                       'hansen_gain': 'gain'}
+            url_lut = {'hansen_treecover_2000': 'treecover2000', 'hansen_lossyear': 'lossyear', 'hansen_gain': 'gain'}
             return url.replace('_last_', f'_{url_lut[tile_key]}_')
+
         df_tiles.url = df_tiles.url.map(toggle_hansen_url)
 
     if year is not None:
         if tile_key not in DATASETS_WITH_YEAR:
             raise ValueError('Year is only supported ' f'with {DATASETS_WITH_YEAR}')
         if tile_key == 'hansen_annual_mosaic':
+
             def update_hansen_landsat_mosaic_url_p(url):
                 return update_hansen_landsat_mosaic_url(url, year)
+
             df_tiles.url = df_tiles.url.map(update_hansen_landsat_mosaic_url_p)
         if tile_key == 'cop_100_lulc_discrete':
             if year not in COP_100_YEARS:
