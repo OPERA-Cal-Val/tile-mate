@@ -8,11 +8,11 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.0.9]
 
-## Added
+### Added
 * Hansen datasets including `treecover_2000`, `gain`, `lossyear` (these are the tile shortnames). Infomration on these tiles can be found here: https://data.globalforestwatch.org/documents/941f17325a494ed78c4817f9bb20f33a/explore
 * RADD Deforestation Alerts from 2022 (with shortname `radd_deforestation_alerts_2022`): https://data.globalforestwatch.org/datasets/gfw::deforestation-alerts-radd/about
 
-## Fixed
+### Fixed
 * Test (and fix bugs) in exception handling related to tile coverage, tile sets available, and keyword arguments for certain tiles (e.g. year and season).
 
 ## [0.0.8]
