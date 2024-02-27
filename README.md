@@ -54,7 +54,7 @@ For development, use `pip` with `-e` (editable) mode:
 python -m pip install -e .
 ```
 
-Python 3.10+ is supported.
+Python 3.9+ is supported.
 
 # Notebooks
 
