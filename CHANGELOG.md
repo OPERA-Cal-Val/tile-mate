@@ -6,11 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.9]
+## [0.0.10]
 
 ### Added
 * Added GLAD landcover and change from here: https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/download.html
 * Updated tests to check all datasets with years will fail with value error.
+* Cap numpy at 2.0 due to this issue: https://github.com/unionai-oss/pandera/issues/1656 - here is the relevant PR: https://github.com/unionai-oss/pandera/pull/1690
 
 
 ## [0.0.9]
