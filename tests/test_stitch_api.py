@@ -4,6 +4,8 @@ from tile_mate import get_raster_from_tiles
 from tile_mate.exceptions import NoTileCoverage, TilesetNotSupported
 from tile_mate.stitcher import (
     COP_100_YEARS,
+    DATASETS_WITH_YEAR,
+    GLAD_LANDCOVER_YEARS,
     HANSEN_MOSAIC_YEARS,
     S1_TEMPORAL_BASELINE_DAYS,
     SEASONS,
@@ -20,6 +22,20 @@ def test_esa_world_cover():
     assert len(X.shape) == 3
 
 
+def test_glad_change():
+    bounds = [-120.45, 34.85, -120.15, 35.15]
+    X, _ = get_raster_from_tiles(bounds, tile_shortname='glad_change')
+    assert len(X.shape) == 3
+
+
+@pytest.mark.parametrize('year', GLAD_LANDCOVER_YEARS)
+def test_glad_landcover_datasets(year):
+    # Note only getting 1 tile - these are large datasets!
+    bounds = [-120.45, 34.85, -121.15, 34.95]
+    X, _ = get_raster_from_tiles(bounds, tile_shortname='glad_landcover', year=year)
+    assert len(X.shape) == 3
+
+
 @pytest.mark.parametrize('year', [HANSEN_MOSAIC_YEARS[k] for k in [0, 2, 4, 6, 10]])
 def test_hansen_mosaic_datasets(year):
     # Note only getting 1 tile - these are large datasets!
@@ -28,11 +44,11 @@ def test_hansen_mosaic_datasets(year):
     assert len(X.shape) == 3
 
 
-def test_hansen_mosaic_requires_year():
-    # Note only getting 1 tile - these are large datasets!
+def test_requires_year():
     bounds = [-120.45, 34.85, -120.15, 34.95]
-    with pytest.raises(ValueError):
-        X, _ = get_raster_from_tiles(bounds, tile_shortname='hansen_annual_mosaic')
+    for dataset_sn in DATASETS_WITH_YEAR:
+        with pytest.raises(ValueError):
+            X, _ = get_raster_from_tiles(bounds, tile_shortname=dataset_sn)
 
 
 def test_valid_year_exceptions():

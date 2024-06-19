@@ -24,16 +24,19 @@ GEOJSON_DICT = {
     'cop_100_lulc_discrete': 'cop_100m_lulc_discrete_classes.geojson.zip',
     'radd_deforestation_alerts_2022': 'radd_deforestation_alerts_2022.geojson.zip',
     'hand': 'asf_hand_2021.geojson.zip',
+    'glad_landcover': 'glad_landcover_2020.geojson.zip',
+    'glad_change': 'glad_landcover_2020.geojson.zip',
 }
 DATASET_SHORTNAMES = list(GEOJSON_DICT.keys())
 
-DATASETS_WITH_YEAR = ['hansen_annual_mosaic', 'cop_100_lulc_discrete']
+DATASETS_WITH_YEAR = ['hansen_annual_mosaic', 'cop_100_lulc_discrete', 'glad_landcover']
 HANSEN_MOSAIC_YEARS = [2000] + list(range(2013, 2023))
 COP_100_YEARS = list(range(2015, 2020))
 CURRENT_HANSEN_VERSION = 10
 CURRENT_HANSEN_YEAR = 2022
 SEASONS = ['fall', 'winter', 'spring', 'summer']
 S1_TEMPORAL_BASELINE_DAYS = [6, 12, 18, 24, 36, 48]
+GLAD_LANDCOVER_YEARS = [2000, 2005, 2010, 2015, 2020]
 
 
 @lru_cache
@@ -63,6 +66,13 @@ def get_tile_data(
             return url.replace('_last_', f'_{url_lut[tile_key]}_')
 
         df_tiles.url = df_tiles.url.map(toggle_hansen_url)
+    if tile_key == 'glad_change':
+
+        def update_glad_change_url(url: str) -> str:
+            url_updated = url[:76] + '2000-2020change' + url[80:]
+            return url_updated
+
+        df_tiles.url = df_tiles.url.map(update_glad_change_url)
 
     if year is not None:
         if tile_key not in DATASETS_WITH_YEAR:
@@ -73,6 +83,14 @@ def get_tile_data(
                 return update_hansen_landsat_mosaic_url(url, year)
 
             df_tiles.url = df_tiles.url.map(update_hansen_landsat_mosaic_url_p)
+        if tile_key == 'glad_landcover':
+
+            def update_glad_landcover_url(url: str, year: int = year) -> str:
+                url_updated = url[:76] + f'{year}' + url[80:]
+                return url_updated
+
+            df_tiles.url = df_tiles.url.map(update_glad_landcover_url)
+
         if tile_key == 'cop_100_lulc_discrete':
             if year not in COP_100_YEARS:
                 cop_100_years_str = list(map(str, COP_100_YEARS))
