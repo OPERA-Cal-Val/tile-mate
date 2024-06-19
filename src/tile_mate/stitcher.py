@@ -67,9 +67,11 @@ def get_tile_data(
 
         df_tiles.url = df_tiles.url.map(toggle_hansen_url)
     if tile_key == 'glad_change':
+
         def update_glad_change_url(url: str) -> str:
             url_updated = url[:76] + '2000-2020change' + url[80:]
             return url_updated
+
         df_tiles.url = df_tiles.url.map(update_glad_change_url)
 
     if year is not None:
@@ -82,9 +84,11 @@ def get_tile_data(
 
             df_tiles.url = df_tiles.url.map(update_hansen_landsat_mosaic_url_p)
         if tile_key == 'glad_landcover':
+
             def update_glad_landcover_url(url: str, year: int = year) -> str:
                 url_updated = url[:76] + f'{year}' + url[80:]
                 return url_updated
+
             df_tiles.url = df_tiles.url.map(update_glad_landcover_url)
 
         if tile_key == 'cop_100_lulc_discrete':
