@@ -4,11 +4,11 @@ from tile_mate import get_raster_from_tiles
 from tile_mate.exceptions import NoTileCoverage, TilesetNotSupported
 from tile_mate.stitcher import (
     COP_100_YEARS,
+    DATASETS_WITH_YEAR,
+    GLAD_LANDCOVER_YEARS,
     HANSEN_MOSAIC_YEARS,
     S1_TEMPORAL_BASELINE_DAYS,
     SEASONS,
-    GLAD_LANDCOVER_YEARS,
-    DATASETS_WITH_YEAR
 )
 
 
