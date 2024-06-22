@@ -36,6 +36,7 @@ CURRENT_HANSEN_VERSION = 10
 CURRENT_HANSEN_YEAR = 2022
 SEASONS = ['fall', 'winter', 'spring', 'summer']
 S1_TEMPORAL_BASELINE_DAYS = [6, 12, 18, 24, 36, 48]
+S1_VARIABLES = ['rho', 'tau', 'rmse']
 GLAD_LANDCOVER_YEARS = [2000, 2005, 2010, 2015, 2020]
 
 
@@ -55,6 +56,7 @@ def get_tile_data(
     year: int = None,
     season: str = None,
     temporal_baseline_days: int = None,
+    variable: str = None
 ) -> gpd.GeoDataFrame:
     # Because tile data is cached - we need to copy it.
     df_tiles = get_all_tile_data(tile_key).copy()
@@ -102,16 +104,33 @@ def get_tile_data(
             raise ValueError('Year is required for tile lookup')
 
     if tile_key == 's1_coherence_2020':
-        if any([var is None for var in [temporal_baseline_days, season]]):
-            raise ValueError(f'{tile_key} requires season and temporal baseline ' 'to be specified')
+        if season is None:
+            raise ValueError(f'{tile_key} requires season to be specified')
+        if variable is None and temporal_baseline_days is None:
+            raise ValueError(f'{tile_key} requires either variable or temporal baseline to be specified')
+
         if season not in SEASONS:
             raise ValueError(f'season keyword must be in {", ".join(SEASONS)}')
-        if temporal_baseline_days not in S1_TEMPORAL_BASELINE_DAYS:
+        if temporal_baseline_days not in [None, *S1_TEMPORAL_BASELINE_DAYS]:
             tb_days_str = list(map(str, S1_TEMPORAL_BASELINE_DAYS))
             raise ValueError(f'temporal_baseline_days must be in {", ".join(tb_days_str)}')
+        if variable not in [None, *S1_VARIABLES]:
+            raise ValueError(f'variable keyword must be in {", ".join(S1_VARIABLES)}')
+        # we need season, but we can either do temporal baseline, or variable
         ind_season = df_tiles.season == season
-        ind_tb = df_tiles.temporal_baseline_days == temporal_baseline_days
-        df_tiles = df_tiles[ind_tb & ind_season].reset_index(drop=True)
+        if temporal_baseline_days is not None:
+            ind_tb = df_tiles.temporal_baseline_days == temporal_baseline_days
+            total_ind = ind_tb & ind_season
+            df_tiles = df_tiles[total_ind].reset_index(drop=True)
+        else:
+            # ind_variable = df_tiles.variable == variable
+            # HACK: there is not a "variable" for now.
+            # So instead, we pick the 12day rasters, the manipulate the URL to get the variable we want
+            ind_tb = df_tiles.temporal_baseline_days == 12
+            total_ind = ind_tb & ind_season
+            df_tiles = df_tiles[total_ind].reset_index(drop=True)
+            df_tiles.loc[:, 'url'] = df_tiles.loc[:, 'url'].str.replace('_COH12', f'_{variable}')
+
     if df_tiles.empty:
         raise NoTileCoverage(f'{tile_key} has no global tiles with the parameters provided')
     return df_tiles
@@ -177,11 +196,12 @@ def get_additional_tile_metadata(urls: list[str], max_tile_tries: int = 10) -> d
 
 def get_raster_from_tiles(
     extent: list[float],
-    tile_shortname: str = None,
-    df_tiles: gpd.GeoDataFrame = None,
-    year: int = None,
-    season: str = None,
-    temporal_baseline_days: int = None,
+    tile_shortname: str | None = None,
+    df_tiles: gpd.GeoDataFrame | None = None,
+    year: int  | None = None,
+    season: str | None = None,
+    temporal_baseline_days: int | None = None,
+    variable: str | None = None
 ) -> tuple:
     if (tile_shortname is None) and (df_tiles is None):
         raise ValueError('Either "tile_shortname" or "df_tiles" must be provided')
@@ -195,6 +215,7 @@ def get_raster_from_tiles(
             year=year,
             temporal_baseline_days=temporal_baseline_days,
             season=season,
+            variable=variable,
         )
 
     df_tiles = TILE_SCHEMA.validate(df_tiles)
