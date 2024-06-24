@@ -9,6 +9,7 @@ from tile_mate.stitcher import (
     HANSEN_MOSAIC_YEARS,
     S1_TEMPORAL_BASELINE_DAYS,
     SEASONS,
+    S1_MODEL_VARIABLES,
 )
 
 
@@ -69,6 +70,22 @@ def test_coherence_dataset(season, temporal_baseline_days):
         tile_shortname='s1_coherence_2020',
         season=season,
         temporal_baseline_days=temporal_baseline_days,
+        s1_decay_model_param=None,
+    )
+    assert len(X.shape) == 3
+
+
+@pytest.mark.parametrize('season', SEASONS)
+@pytest.mark.parametrize('s1_var', S1_MODEL_VARIABLES)
+def test_s1_model_tiles(season, s1_var):
+    # Note only getting 1 tile
+    bounds = [-120.45, 34.85, -120.15, 34.95]
+    X, _ = get_raster_from_tiles(
+        bounds,
+        tile_shortname='s1_coherence_2020',
+        season=season,
+        temporal_baseline_days=None,
+        s1_decay_model_param=s1_var,
     )
     assert len(X.shape) == 3
 
@@ -131,4 +148,14 @@ def test_s1_coherence_exceptions():
     with pytest.raises(ValueError):
         X, _ = get_raster_from_tiles(
             bounds, tile_shortname='s1_coherence_2020', season='fall', temporal_baseline_days=5
+        )
+
+    # No temporal baseline when using model param
+    with pytest.raises(ValueError):
+        X, _ = get_raster_from_tiles(
+            bounds,
+            tile_shortname='s1_coherence_2020',
+            season='fall',
+            temporal_baseline_days=12,
+            s1_decay_model_param='rmse',
         )

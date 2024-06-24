@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Optional
 
 import geopandas as gpd
 import rasterio
@@ -36,7 +37,7 @@ CURRENT_HANSEN_VERSION = 10
 CURRENT_HANSEN_YEAR = 2022
 SEASONS = ['fall', 'winter', 'spring', 'summer']
 S1_TEMPORAL_BASELINE_DAYS = [6, 12, 18, 24, 36, 48]
-S1_VARIABLES = ['rho', 'tau', 'rmse']
+S1_MODEL_VARIABLES = ['rho', 'tau', 'rmse']
 GLAD_LANDCOVER_YEARS = [2000, 2005, 2010, 2015, 2020]
 
 
@@ -53,10 +54,10 @@ def get_all_tile_data(tile_key: str) -> gpd.GeoDataFrame:
 @lru_cache
 def get_tile_data(
     tile_key: str,
-    year: int = None,
-    season: str = None,
-    temporal_baseline_days: int = None,
-    variable: str = None
+    year: Optional[int] = None,
+    season: Optional[str] = None,
+    temporal_baseline_days: Optional[str] = None,
+    s1_decay_model_param: Optional[str] = None
 ) -> gpd.GeoDataFrame:
     # Because tile data is cached - we need to copy it.
     df_tiles = get_all_tile_data(tile_key).copy()
@@ -104,32 +105,32 @@ def get_tile_data(
             raise ValueError('Year is required for tile lookup')
 
     if tile_key == 's1_coherence_2020':
-        if season is None:
-            raise ValueError(f'{tile_key} requires season to be specified')
-        if variable is None and temporal_baseline_days is None:
-            raise ValueError(f'{tile_key} requires either variable or temporal baseline to be specified')
-
+        if (season is None) and (s1_decay_model_param is None):
+            raise ValueError(f'{tile_key} requires *both* season or s1_decay_model_param to be specified')
+        # XOR of variables
+        if (temporal_baseline_days is None) == (s1_decay_model_param is None):
+            raise ValueError(f'{tile_key} requires either s1_decay_model_param or temporal baseline to be specified')
         if season not in SEASONS:
             raise ValueError(f'season keyword must be in {", ".join(SEASONS)}')
         if temporal_baseline_days not in [None, *S1_TEMPORAL_BASELINE_DAYS]:
             tb_days_str = list(map(str, S1_TEMPORAL_BASELINE_DAYS))
             raise ValueError(f'temporal_baseline_days must be in {", ".join(tb_days_str)}')
-        if variable not in [None, *S1_VARIABLES]:
-            raise ValueError(f'variable keyword must be in {", ".join(S1_VARIABLES)}')
+        if s1_decay_model_param not in [None, *S1_MODEL_VARIABLES]:
+            raise ValueError(f's1_decay_model_param keyword must be in {", ".join(S1_MODEL_VARIABLES)}')
         # we need season, but we can either do temporal baseline, or variable
         ind_season = df_tiles.season == season
+        # temporal baseline and season
         if temporal_baseline_days is not None:
             ind_tb = df_tiles.temporal_baseline_days == temporal_baseline_days
             total_ind = ind_tb & ind_season
             df_tiles = df_tiles[total_ind].reset_index(drop=True)
+        # s1_decay_model_param
         else:
-            # ind_variable = df_tiles.variable == variable
-            # HACK: there is not a "variable" for now.
-            # So instead, we pick the 12day rasters, the manipulate the URL to get the variable we want
+            # use 12 day temporal baseline to replace with s1_decay_model_param
             ind_tb = df_tiles.temporal_baseline_days == 12
             total_ind = ind_tb & ind_season
             df_tiles = df_tiles[total_ind].reset_index(drop=True)
-            df_tiles.loc[:, 'url'] = df_tiles.loc[:, 'url'].str.replace('_COH12', f'_{variable}')
+            df_tiles.loc[:, 'url'] = df_tiles.loc[:, 'url'].str.replace('_COH12', f'_{s1_decay_model_param}')
 
     if df_tiles.empty:
         raise NoTileCoverage(f'{tile_key} has no global tiles with the parameters provided')
@@ -198,10 +199,10 @@ def get_raster_from_tiles(
     extent: list[float],
     tile_shortname: str | None = None,
     df_tiles: gpd.GeoDataFrame | None = None,
-    year: int  | None = None,
-    season: str | None = None,
-    temporal_baseline_days: int | None = None,
-    variable: str | None = None
+    year: Optional[int] = None,
+    season: Optional[str] = None,
+    temporal_baseline_days: Optional[int] = None,
+    s1_decay_model_param: Optional[str] = None
 ) -> tuple:
     if (tile_shortname is None) and (df_tiles is None):
         raise ValueError('Either "tile_shortname" or "df_tiles" must be provided')
@@ -215,7 +216,7 @@ def get_raster_from_tiles(
             year=year,
             temporal_baseline_days=temporal_baseline_days,
             season=season,
-            variable=variable,
+            s1_decay_model_param=s1_decay_model_param,
         )
 
     df_tiles = TILE_SCHEMA.validate(df_tiles)
