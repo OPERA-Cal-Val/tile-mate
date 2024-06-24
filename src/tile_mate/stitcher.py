@@ -57,7 +57,7 @@ def get_tile_data(
     year: Optional[int] = None,
     season: Optional[str] = None,
     temporal_baseline_days: Optional[str] = None,
-    s1_decay_model_param: Optional[str] = None
+    s1_decay_model_param: Optional[str] = None,
 ) -> gpd.GeoDataFrame:
     # Because tile data is cached - we need to copy it.
     df_tiles = get_all_tile_data(tile_key).copy()
@@ -202,7 +202,7 @@ def get_raster_from_tiles(
     year: Optional[int] = None,
     season: Optional[str] = None,
     temporal_baseline_days: Optional[int] = None,
-    s1_decay_model_param: Optional[str] = None
+    s1_decay_model_param: Optional[str] = None,
 ) -> tuple:
     if (tile_shortname is None) and (df_tiles is None):
         raise ValueError('Either "tile_shortname" or "df_tiles" must be provided')
