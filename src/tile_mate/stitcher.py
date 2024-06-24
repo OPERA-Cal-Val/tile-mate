@@ -197,8 +197,8 @@ def get_additional_tile_metadata(urls: list[str], max_tile_tries: int = 10) -> d
 
 def get_raster_from_tiles(
     extent: list[float],
-    tile_shortname: str | None = None,
-    df_tiles: gpd.GeoDataFrame | None = None,
+    tile_shortname: Optional[str] = None,
+    df_tiles: Optional[gpd.GeoDataFrame] = None,
     year: Optional[int] = None,
     season: Optional[str] = None,
     temporal_baseline_days: Optional[int] = None,
