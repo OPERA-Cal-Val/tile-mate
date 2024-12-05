@@ -1,6 +1,11 @@
 import geopandas as gpd
 from pandera import Column, DataFrameSchema
 
+# Add support for GeometryDtype
+pandas_engine.Engine.dtype = staticmethod(
+    lambda dtype: dtype if dtype == gpd.array.GeometryDtype else None
+)
+
 TILE_SCHEMA = DataFrameSchema(
     {
         'tile_id': Column(str, required=True),
