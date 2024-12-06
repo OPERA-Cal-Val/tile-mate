@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.12]
+  * Added fix for geometry validation for pandera >= 0.21
+  * Remove ruff checks from notebooks
+
 ## [0.0.11]
 * Added `rho`, `tau` and `rmse` variables for VV polarization from Sentinel-1 Global coherence. See: http://sentinel-1-global-coherence-earthbigdata.s3-website-us-west-2.amazonaws.com/
 

@@ -80,6 +80,7 @@ exclude = [
     "build",
     "dist",
     "site-packages",
+    "notebooks/"
 ]
 indent-width = 4
 
