@@ -7,7 +7,7 @@ dependencies:
  - ipykernel
  - rasterio
  - shapely
- - numpy<2.0
+ - numpy
  - matplotlib
  - fiona
  - geopandas
