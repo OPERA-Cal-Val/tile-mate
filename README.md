@@ -6,7 +6,7 @@
 [![Conda version](https://img.shields.io/conda/vn/conda-forge/tile_mate)](https://anaconda.org/conda-forge/tile_mate)
 [![Conda platforms](https://img.shields.io/conda/pn/conda-forge/tile_mate)](https://anaconda.org/conda-forge/tile_mate)
 
-This tool provides a tool to create continuous rasters of global publicly available tiles such as Pekel Occurence and ESA 10 m land cover. This is a simpler cousin of [`dem-stitcher`](https://github.com/ACCESS-Cloud-Based-InSAR/dem-stitcher) without the need for basic post-processing (e.g. fractional pixel translation and vertical datum transformations).
+This library provides a tool to create continuous rasters of publicly available, global tile sets (in lat/lon) such as Pekel Occurence and ESA 10 m land cover. This is a simpler cousin of [`dem-stitcher`](https://github.com/ACCESS-Cloud-Based-InSAR/dem-stitcher) without the need for basic post-processing (e.g. fractional pixel translation and vertical datum transformations).
 
 
 The API can be summarized as
@@ -16,8 +16,8 @@ from tile_mate import get_raster_from_tiles
 bounds = [-120.55, 34.85, -120.25, 35.15]
 X, p = get_raster_from_tiles(bounds, tile_shortname='esa_world_cover_2021')
 
-# X is an c x m x n numpy array, where c is the number of channels specified by `count`
-# p is a dictionary (or a rasterio profile) including relevant GIS metadata; CRS is epsg:4326
+# X is an c x m x n numpy array, where c is the number of channels specified by rasterio `count` metadata
+# p is a dictionary (or a rasterio profile) including relevant GIS metadata; CRS is assumed to be epsg:4326
 ```
 
 The rasters are returned in the global lat/lon projection `epsg:4326` and the API assumes that bounds are supplied in this format.
