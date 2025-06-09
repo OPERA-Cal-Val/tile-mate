@@ -79,7 +79,7 @@ def get_tile_data(
 
     if year is not None:
         if tile_key not in DATASETS_WITH_YEAR:
-            raise ValueError('Year is only supported ' f'with {DATASETS_WITH_YEAR}')
+            raise ValueError(f'Year is only supported with {DATASETS_WITH_YEAR}')
         if tile_key == 'hansen_annual_mosaic':
 
             def update_hansen_landsat_mosaic_url_p(url):
@@ -147,9 +147,7 @@ def update_hansen_landsat_mosaic_url(url: str, year: int):
     elif year <= 2015:
         # Gets the "last_00N_040W.tif" portion of the url
         url_end = url[-17:]
-        url_updated = (
-            'https://storage.googleapis.com/earthenginepartners-hansen/' f'GFC{year}/Hansen_GFC{year}_{url_end}'
-        )
+        url_updated = f'https://storage.googleapis.com/earthenginepartners-hansen/GFC{year}/Hansen_GFC{year}_{url_end}'
     else:
         year_diff = CURRENT_HANSEN_YEAR - year
         version_updated = CURRENT_HANSEN_VERSION - year_diff
