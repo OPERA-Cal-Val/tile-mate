@@ -1,4 +1,11 @@
-from pandera.pandas import Column, DataFrameSchema
+# TODO: remove this once DockerizedTopsapp is updated to pandera>=0.24.0
+try:
+    # Preferred location for pandera >= 0.24.0
+    from pandera.pandas import Column, DataFrameSchema
+except ImportError:
+    # Fallback for older versions
+    from pandera import Column, DataFrameSchema
+
 
 TILE_SCHEMA = DataFrameSchema(
     {

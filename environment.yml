@@ -16,7 +16,7 @@ dependencies:
  - pip
  - dem_stitcher>=2.5.4
  - pandas
- - pandera>=0.24.0
+ - pandera
  - flake8
  - flake8-blind-except
  - flake8-builtins
