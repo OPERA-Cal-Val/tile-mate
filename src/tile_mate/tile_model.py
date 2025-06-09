@@ -1,4 +1,4 @@
-from pandera import Column, DataFrameSchema
+from pandera.pandas import Column, DataFrameSchema
 
 TILE_SCHEMA = DataFrameSchema(
     {
