@@ -3,11 +3,6 @@ name: Static Analysis (Flake8/Ruff)
 on: push
 
 jobs:
-  call-flake8-workflow:
-    uses: ASFHyP3/actions/.github/workflows/reusable-flake8.yml@v0.20.0
-    with:
-      local_package_names: tile_mate
-
   call-secrets-analysis-workflow:
     uses: ASFHyP3/actions/.github/workflows/reusable-secrets-analysis.yml@v0.20.0
   
