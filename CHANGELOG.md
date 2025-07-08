@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.14] - 2025-07-06
+
+### Removed
+- Suppport for `cop_100_lulc_discrete` - see https://github.com/OPERA-Cal-Val/tile-mate/issues/57 for how to obtain data efficiently
+  
+### Added
+- `umd_ocean_mask` available at google storage: https://console.cloud.google.com/storage/browser/earthenginepartners-hansen/OceanMask
+
+### Fixed
+- `sentinel-1` coherence examples in `Basic_Demo.ipynb`
+
 ## [0.0.13] - 2025-06-09
 
 ### Changed
