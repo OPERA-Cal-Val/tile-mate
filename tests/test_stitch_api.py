@@ -3,7 +3,6 @@ import pytest
 from tile_mate import get_raster_from_tiles
 from tile_mate.exceptions import NoTileCoverage, TilesetNotSupported
 from tile_mate.stitcher import (
-    COP_100_YEARS,
     DATASETS_WITH_YEAR,
     GLAD_LANDCOVER_YEARS,
     HANSEN_MOSAIC_YEARS,
@@ -26,6 +25,12 @@ def test_esa_world_cover():
 def test_glad_change():
     bounds = [-120.45, 34.85, -120.15, 35.15]
     X, _ = get_raster_from_tiles(bounds, tile_shortname='glad_change')
+    assert len(X.shape) == 3
+
+
+def test_umd_ocean_mask():
+    bounds = [-120.45, 34.85, -120.15, 35.15]
+    X, _ = get_raster_from_tiles(bounds, tile_shortname='umd_ocean_mask')
     assert len(X.shape) == 3
 
 
@@ -56,8 +61,6 @@ def test_valid_year_exceptions():
     bounds = [-120.45, 34.85, -120.15, 34.95]
     with pytest.raises(ValueError):
         X, _ = get_raster_from_tiles(bounds, tile_shortname='hansen_annual_mosaic', year=2002)
-    with pytest.raises(ValueError):
-        X, _ = get_raster_from_tiles(bounds, tile_shortname='cop_100_lulc_discrete', year=2002)
 
 
 @pytest.mark.parametrize('season', SEASONS)
@@ -87,13 +90,6 @@ def test_s1_model_tiles(season, s1_var):
         temporal_baseline_days=None,
         s1_decay_model_param=s1_var,
     )
-    assert len(X.shape) == 3
-
-
-@pytest.mark.parametrize('year', COP_100_YEARS)
-def test_cop100_dataset(year: int):
-    bounds = [-120.45, 34.85, -120.15, 34.95]
-    X, _ = get_raster_from_tiles(bounds, tile_shortname='cop_100_lulc_discrete', year=year)
     assert len(X.shape) == 3
 
 
