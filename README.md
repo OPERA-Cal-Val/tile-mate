@@ -110,7 +110,7 @@ We welcome contributions to this open-source package. To do so:
 3. Make your modifications in your own fork
 4. Make a pull-request (PR) in this repo with the code in your fork and tag the repo owner or a relevant contributor.
 
-We use `flake8` and associated linting packages to ensure some basic code quality (see the `environment.yml`). These will be checked for each commit in a PR. Try to write tests wherever possible.
+We use `ruff` and associated linting packages to ensure some basic code quality (see the `environment.yml`). These will be checked for each commit in a PR. Try to write tests wherever possible.
 
 # Support
 
