@@ -13,6 +13,7 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   
 ### Added
 - `umd_ocean_mask` available at google storage: https://console.cloud.google.com/storage/browser/earthenginepartners-hansen/OceanMask
+- Python 3.13 support.
 
 ### Fixed
 - `sentinel-1` coherence examples in `Basic_Demo.ipynb`
