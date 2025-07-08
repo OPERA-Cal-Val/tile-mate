@@ -7,6 +7,7 @@ import rasterio
 from dem_stitcher.geojson_io import read_geojson_gzip
 from dem_stitcher.merge import merge_tile_datasets_within_extent
 from rasterio.errors import RasterioIOError
+from rasterio.env import Env
 from shapely.geometry import box
 
 from .exceptions import NoTileCoverage, TilesetNotSupported
@@ -22,17 +23,16 @@ GEOJSON_DICT = {
     'hansen_gain': 'hansen_landsat_mosaic_2022.geojson.zip',
     'hansen_treecover_2000': 'hansen_landsat_mosaic_2022.geojson.zip',
     's1_coherence_2020': 's1_coherence_2020.geojson.zip',
-    'cop_100_lulc_discrete': 'cop_100m_lulc_discrete_classes.geojson.zip',
     'radd_deforestation_alerts_2022': 'radd_deforestation_alerts_2022.geojson.zip',
     'hand': 'asf_hand_2021.geojson.zip',
     'glad_landcover': 'glad_landcover_2020.geojson.zip',
     'glad_change': 'glad_landcover_2020.geojson.zip',
+    'umd_ocean_mask': 'umd_ocean_mask.geojson.zip',
 }
 DATASET_SHORTNAMES = list(GEOJSON_DICT.keys())
 
-DATASETS_WITH_YEAR = ['hansen_annual_mosaic', 'cop_100_lulc_discrete', 'glad_landcover']
+DATASETS_WITH_YEAR = ['hansen_annual_mosaic', 'glad_landcover']
 HANSEN_MOSAIC_YEARS = [2000] + list(range(2013, 2023))
-COP_100_YEARS = list(range(2015, 2020))
 CURRENT_HANSEN_VERSION = 10
 CURRENT_HANSEN_YEAR = 2022
 SEASONS = ['fall', 'winter', 'spring', 'summer']
@@ -93,12 +93,6 @@ def get_tile_data(
                 return url_updated
 
             df_tiles.url = df_tiles.url.map(update_glad_landcover_url)
-
-        if tile_key == 'cop_100_lulc_discrete':
-            if year not in COP_100_YEARS:
-                cop_100_years_str = list(map(str, COP_100_YEARS))
-                raise ValueError(f'Year must be in {cop_100_years_str}')
-            df_tiles = df_tiles[df_tiles.year == year].reset_index(drop=True)
 
     if year is None:
         if tile_key in DATASETS_WITH_YEAR:
@@ -223,7 +217,14 @@ def get_raster_from_tiles(
     tile_metadata = get_additional_tile_metadata(urls)
 
     urls_subset = get_urls_from_tile_df(extent, df_tiles)
-    X_merged, p_merged = merge_tile_datasets_within_extent(urls_subset, extent)
+
+    if tile_shortname == 'umd_ocean_mask':
+        env = Env(GS_NO_SIGN_REQUEST='YES')
+    else:
+        env = Env()  # default environment
+
+    with env:
+        X_merged, p_merged = merge_tile_datasets_within_extent(urls_subset, extent)
 
     # Are stored in the profile for provenance
     p_merged.update(**tile_metadata)
