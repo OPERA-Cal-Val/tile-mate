@@ -28,8 +28,9 @@ def test_glad_change():
     assert len(X.shape) == 3
 
 
-def test_umd_ocean_mask():
-    bounds = [-120.45, 34.85, -120.15, 35.15]
+# Antimeridian bounds too!
+@pytest.mark.parametrize('bounds', [[-181, 51.25, -179, 51.75], [-120.45, 34.85, -120.15, 35.15]])
+def test_umd_ocean_mask(bounds: list[float]):
     X, _ = get_raster_from_tiles(bounds, tile_shortname='umd_ocean_mask')
     assert len(X.shape) == 3
 

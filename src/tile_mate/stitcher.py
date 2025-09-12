@@ -1,6 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 from typing import Optional
+import warnings
 
 import geopandas as gpd
 import rasterio
@@ -11,6 +12,7 @@ from dem_stitcher.stitcher import _translate_one_tile_across_dateline
 from rasterio.errors import RasterioIOError
 from rasterio.env import Env
 from shapely.geometry import box
+import pandas as pd
 
 from .exceptions import NoTileCoverage, TilesetNotSupported
 from .tile_model import TILE_SCHEMA
@@ -130,6 +132,7 @@ def get_tile_data(
 
     if df_tiles.empty:
         raise NoTileCoverage(f'{tile_key} has no global tiles with the parameters provided')
+
     return df_tiles
 
 
@@ -154,9 +157,22 @@ def update_hansen_landsat_mosaic_url(url: str, year: int):
 
 
 def get_urls_from_tile_df(extent: list[float], df_tiles: gpd.GeoDataFrame) -> list[str]:
+    df_tiles_all = df_tiles.copy()
+    crossing = get_dateline_crossing(extent)
+    if crossing:
+        warnings.warn(
+            'Getting tiles across dateline on the opposite hemisphere; '
+            f'The source tiles will be {-2 * crossing} deg along the '
+            'longitudinal axis from the extent requested',
+            category=UserWarning,
+        )
+        df_tiles_all_translated = df_tiles_all.copy()
+        x_translation = 2 * crossing
+        df_tiles_all_translated.geometry = df_tiles_all.geometry.translate(xoff=x_translation)
+        df_tiles_all = pd.concat([df_tiles_all, df_tiles_all_translated], axis=0).reset_index(drop=True)
     bbox = box(*extent)
-    ind_inter = df_tiles.geometry.intersects(bbox)
-    df_subset = df_tiles[ind_inter].reset_index(drop=True)
+    ind_inter = df_tiles_all.geometry.intersects(bbox)
+    df_subset = df_tiles_all[ind_inter].reset_index(drop=True)
     urls = df_subset.url.tolist()
     if not urls:
         raise NoTileCoverage('There are no tiles over the requested area')

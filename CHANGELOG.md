@@ -8,8 +8,11 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.0.14] - 2025-07-06
 
-## Added
+### Added
 - Antimeridian/dateline crossing using `dem-stitcher`.
+
+### Changed
+- Enforces `xmin <= xmax` and `ymin <= xmax` where `extent = (xmin, ymin, xmax, ymax)` is the input for `get_raster_from_tiles`.
 
 ## [0.0.14] - 2025-07-06
 
