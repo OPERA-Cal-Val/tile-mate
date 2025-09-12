@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.15] - 2025-07-06
+
+### Added
+- Antimeridian/dateline crossing using `dem-stitcher`.
+
+### Changed
+- Enforces `xmin <= xmax` and `ymin <= xmax` where `extent = (xmin, ymin, xmax, ymax)` is the input for `get_raster_from_tiles`.
+
 ## [0.0.14] - 2025-07-06
 
 ### Removed
