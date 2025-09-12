@@ -97,9 +97,12 @@ More information about these datasets can be found below
 
 See these [notebooks](notebooks/tile_creation) to see how these tiles are generated and organized. Feel free to open a issue ticket or PR if there are modifications or new tilesets you would like to see.
 
-# Dateline support
+# Dateline/antimeridian support
 
-None curently.
+We support a single dateline crossing (crossing +/- 180 longitude) within `get_raster_from_tiles` using in-memory translation of tiles (same as [dem-stitcher](https://github.com/ACCESS-Cloud-Based-InSAR/dem-stitcher)'s functionality). 
+We "wrap" tiles across this dateline crossing. 
+We assume that the supplied bounds/extent overlap the standard lat/lon CRS grid i.e. longitudes between -/+ 180 longitude and are within -/+ 90 latitude, where a buffer around the dateline (longitude axis or $x$-axis). 
+Wrapping tiles around the North and South poles (i.e. at -/+ 90 latitude) is *not* supported (a different CRS is what's required) and an exception will be raised.
 
 # Contributing
 

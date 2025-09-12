@@ -6,6 +6,8 @@ import geopandas as gpd
 import rasterio
 from dem_stitcher.geojson_io import read_geojson_gzip
 from dem_stitcher.merge import merge_tile_datasets_within_extent
+from dem_stitcher.dateline import get_dateline_crossing
+from dem_stitcher.stitcher import _translate_one_tile_across_dateline
 from rasterio.errors import RasterioIOError
 from rasterio.env import Env
 from shapely.geometry import box
@@ -218,13 +220,21 @@ def get_raster_from_tiles(
 
     urls_subset = get_urls_from_tile_df(extent, df_tiles)
 
+    datasets = [rasterio.open(url) for url in urls_subset]
+    crossing = get_dateline_crossing(extent)
+    if crossing:
+        zipped_data = list(map(lambda ds: _translate_one_tile_across_dateline(ds, crossing), datasets))
+        memory_files, datasets = zip(*zipped_data)
+
     if tile_shortname == 'umd_ocean_mask':
         env = Env(GS_NO_SIGN_REQUEST='YES')
     else:
         env = Env()  # default environment
 
     with env:
-        X_merged, p_merged = merge_tile_datasets_within_extent(urls_subset, extent)
+        X_merged, p_merged = merge_tile_datasets_within_extent(datasets, extent)
+    if crossing:
+        list(map(lambda mf: mf.close(), memory_files))
 
     # Are stored in the profile for provenance
     p_merged.update(**tile_metadata)

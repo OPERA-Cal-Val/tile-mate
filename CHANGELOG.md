@@ -8,6 +8,11 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.0.14] - 2025-07-06
 
+## Added
+- Antimeridian/dateline crossing using `dem-stitcher`.
+
+## [0.0.14] - 2025-07-06
+
 ### Removed
 - Suppport for `cop_100_lulc_discrete` - see https://github.com/OPERA-Cal-Val/tile-mate/issues/57 for how to obtain data efficiently
   
