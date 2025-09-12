@@ -37,7 +37,7 @@ def test_umd_ocean_mask():
 @pytest.mark.parametrize('year', GLAD_LANDCOVER_YEARS)
 def test_glad_landcover_datasets(year):
     # Note only getting 1 tile - these are large datasets!
-    bounds = [-120.45, 34.85, -121.15, 34.95]
+    bounds = [-121.15, 34.85, -120.45, 34.95]
     X, _ = get_raster_from_tiles(bounds, tile_shortname='glad_landcover', year=year)
     assert len(X.shape) == 3
 
