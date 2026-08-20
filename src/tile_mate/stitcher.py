@@ -1,18 +1,17 @@
+import warnings
 from functools import lru_cache
 from pathlib import Path
-from typing import Optional
-import warnings
 
 import geopandas as gpd
+import pandas as pd
 import rasterio
+from dem_stitcher.dateline import get_dateline_crossing
 from dem_stitcher.geojson_io import read_geojson_gzip
 from dem_stitcher.merge import merge_tile_datasets_within_extent
-from dem_stitcher.dateline import get_dateline_crossing
 from dem_stitcher.stitcher import _translate_one_tile_across_dateline
-from rasterio.errors import RasterioIOError
 from rasterio.env import Env
+from rasterio.errors import RasterioIOError
 from shapely.geometry import box
-import pandas as pd
 
 from .exceptions import NoTileCoverage, TilesetNotSupported
 from .tile_model import TILE_SCHEMA
@@ -58,10 +57,10 @@ def get_all_tile_data(tile_key: str) -> gpd.GeoDataFrame:
 @lru_cache
 def get_tile_data(
     tile_key: str,
-    year: Optional[int] = None,
-    season: Optional[str] = None,
-    temporal_baseline_days: Optional[str] = None,
-    s1_decay_model_param: Optional[str] = None,
+    year: int | None = None,
+    season: str | None = None,
+    temporal_baseline_days: str | None = None,
+    s1_decay_model_param: str | None = None,
 ) -> gpd.GeoDataFrame:
     # Because tile data is cached - we need to copy it.
     df_tiles = get_all_tile_data(tile_key).copy()
@@ -98,9 +97,8 @@ def get_tile_data(
 
             df_tiles.url = df_tiles.url.map(update_glad_landcover_url)
 
-    if year is None:
-        if tile_key in DATASETS_WITH_YEAR:
-            raise ValueError('Year is required for tile lookup')
+    if year is None and tile_key in DATASETS_WITH_YEAR:
+        raise ValueError('Year is required for tile lookup')
 
     if tile_key == 's1_coherence_2020':
         if (season is None) and (s1_decay_model_param is None):
@@ -207,12 +205,12 @@ def get_additional_tile_metadata(urls: list[str], max_tile_tries: int = 10) -> d
 
 def get_raster_from_tiles(
     extent: list[float],
-    tile_shortname: Optional[str] = None,
-    df_tiles: Optional[gpd.GeoDataFrame] = None,
-    year: Optional[int] = None,
-    season: Optional[str] = None,
-    temporal_baseline_days: Optional[int] = None,
-    s1_decay_model_param: Optional[str] = None,
+    tile_shortname: str | None = None,
+    df_tiles: gpd.GeoDataFrame | None = None,
+    year: int | None = None,
+    season: str | None = None,
+    temporal_baseline_days: int | None = None,
+    s1_decay_model_param: str | None = None,
 ) -> tuple:
     if (tile_shortname is None) and (df_tiles is None):
         raise ValueError('Either "tile_shortname" or "df_tiles" must be provided')
@@ -239,7 +237,7 @@ def get_raster_from_tiles(
     datasets = [rasterio.open(url) for url in urls_subset]
     crossing = get_dateline_crossing(extent)
     if crossing:
-        zipped_data = list(map(lambda ds: _translate_one_tile_across_dateline(ds, crossing), datasets))
+        zipped_data = [_translate_one_tile_across_dateline(ds, crossing) for ds in datasets]
         memory_files, datasets = zip(*zipped_data)
 
     if tile_shortname == 'umd_ocean_mask':
@@ -250,7 +248,7 @@ def get_raster_from_tiles(
     with env:
         X_merged, p_merged = merge_tile_datasets_within_extent(datasets, extent)
     if crossing:
-        list(map(lambda mf: mf.close(), memory_files))
+        [mf.close() for mf in memory_files]
 
     # Are stored in the profile for provenance
     p_merged.update(**tile_metadata)

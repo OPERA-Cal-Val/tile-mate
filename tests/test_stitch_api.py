@@ -55,13 +55,13 @@ def test_requires_year():
     bounds = [-120.45, 34.85, -120.15, 34.95]
     for dataset_sn in DATASETS_WITH_YEAR:
         with pytest.raises(ValueError):
-            X, _ = get_raster_from_tiles(bounds, tile_shortname=dataset_sn)
+            get_raster_from_tiles(bounds, tile_shortname=dataset_sn)
 
 
 def test_valid_year_exceptions():
     bounds = [-120.45, 34.85, -120.15, 34.95]
     with pytest.raises(ValueError):
-        X, _ = get_raster_from_tiles(bounds, tile_shortname='hansen_annual_mosaic', year=2002)
+        get_raster_from_tiles(bounds, tile_shortname='hansen_annual_mosaic', year=2002)
 
 
 @pytest.mark.parametrize('season', SEASONS)
@@ -117,39 +117,37 @@ def test_no_kwarg_datasets(dataset_shortname):
 
     # Should not allow for additional kwargs
     with pytest.raises(ValueError):
-        X, _ = get_raster_from_tiles(bounds, tile_shortname=dataset_shortname, year=2000)
+        get_raster_from_tiles(bounds, tile_shortname=dataset_shortname, year=2000)
 
 
 def test_tile_mate_exceptions():
     # Over the Atlantic ocean
     bounds = [-48, 40, -47, 41]
     with pytest.raises(NoTileCoverage):
-        X, _ = get_raster_from_tiles(bounds, tile_shortname='esa_world_cover_2021')
+        get_raster_from_tiles(bounds, tile_shortname='esa_world_cover_2021')
 
     bounds = [-120.45, 34.85, -120.15, 34.95]
     with pytest.raises(TilesetNotSupported):
-        X, _ = get_raster_from_tiles(bounds, tile_shortname='foo')
+        get_raster_from_tiles(bounds, tile_shortname='foo')
 
 
 def test_s1_coherence_exceptions():
     bounds = [-120.45, 34.85, -120.15, 34.95]
     # None of the necessary parameters
     with pytest.raises(ValueError):
-        X, _ = get_raster_from_tiles(bounds, tile_shortname='s1_coherence_2020')
+        get_raster_from_tiles(bounds, tile_shortname='s1_coherence_2020')
 
     # Wrong season
     with pytest.raises(ValueError):
-        X, _ = get_raster_from_tiles(bounds, tile_shortname='s1_coherence_2020', season='foo', temporal_baseline_days=6)
+        get_raster_from_tiles(bounds, tile_shortname='s1_coherence_2020', season='foo', temporal_baseline_days=6)
 
     # Wrong TB
     with pytest.raises(ValueError):
-        X, _ = get_raster_from_tiles(
-            bounds, tile_shortname='s1_coherence_2020', season='fall', temporal_baseline_days=5
-        )
+        get_raster_from_tiles(bounds, tile_shortname='s1_coherence_2020', season='fall', temporal_baseline_days=5)
 
     # No temporal baseline when using model param
     with pytest.raises(ValueError):
-        X, _ = get_raster_from_tiles(
+        get_raster_from_tiles(
             bounds,
             tile_shortname='s1_coherence_2020',
             season='fall',
