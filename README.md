@@ -31,11 +31,38 @@ with rasterio.open('esa_world_cover_2021_subset.tif', 'w', **p) as ds:
 
 # Installation
 
-In order to easily manage dependencies, we recommend using dedicated project environments
-via [Anaconda/Miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
-or [Python virtual environments](https://docs.python.org/3/tutorial/venv.html).
+## Pixi (recommended for development)
 
-You can install the package with `conda`/`mamba` using:
+Install [pixi](https://pixi.sh/latest/#installation), then:
+
+```bash
+git clone https://github.com/OPERA-Cal-Val/tile-mate.git
+cd tile-mate
+pixi install
+pixi run python -c "import tile_mate"
+```
+
+`pixi install` creates the `default` environment (the newest supported python) with `tile_mate` already installed in editable mode.
+
+For JupyterLab (with `jupyter-collaboration` for real-time collaborative editing):
+
+```bash
+pixi run jupyter lab
+```
+
+Common tasks:
+
+```bash
+pixi run test     # pytest tests
+pixi run lint     # ruff check
+pixi run format   # ruff format
+```
+
+The `py311`, `py312`, `py313`, and `py314` environments exist for the CI matrix and are built on demand, e.g. `pixi run -e py311 pytest tests` (reclaim it afterwards with `pixi clean -e py311`).
+
+## Conda-forge / PyPI
+
+You can install the released package with `conda`/`mamba` using:
 ```
 mamba install tile_mate
 ```
@@ -43,18 +70,8 @@ or
 ```
 pip install tile-mate
 ```
-Alternatively, you can clone the repository and manage the environment using the `environment.yml` file provided.
 
-1. `mamba env update -f environment.yml`
-2. Activate the environment `conda activate tile-mate`
-3. Install the library with `pip` via `pip install tile-mate`.
-
-For development, use `pip` with `-e` (editable) mode:
-```
-python -m pip install -e .
-```
-
-Python 3.9+ is supported.
+Python 3.11+ is supported.
 
 # Notebooks
 
@@ -113,7 +130,7 @@ We welcome contributions to this open-source package. To do so:
 3. Make your modifications in your own fork
 4. Make a pull-request (PR) in this repo with the code in your fork and tag the repo owner or a relevant contributor.
 
-We use `ruff` and associated linting packages to ensure some basic code quality (see the `environment.yml`). These will be checked for each commit in a PR. Try to write tests wherever possible.
+We use `ruff` to ensure some basic code quality (`pixi run lint` and `pixi run format`). These will be checked for each commit in a PR. Try to write tests wherever possible.
 
 # Support
 
