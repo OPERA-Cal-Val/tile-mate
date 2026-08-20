@@ -11,6 +11,7 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 - Environment management migrated from `conda`/`mamba` (`environment.yml`) to `pixi`, with all configuration in `pyproject.toml` under `[tool.pixi.*]`.
 - CI test matrix now uses `prefix-dev/setup-pixi` with one pixi environment per python version.
+- Static analysis no longer uses `ASFHyP3/actions/.github/workflows/reusable-ruff.yml`, which installs `environment.yml` via micromamba; `ruff` now runs from a dedicated, python-free `lint` pixi environment. The trufflehog secrets-analysis reusable workflow is unchanged.
 - Minimum supported python is now 3.11; python 3.14 is now supported and tested.
 
 ### Removed
