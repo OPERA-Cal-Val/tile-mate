@@ -50,6 +50,10 @@ __pycache__/
 .env
 .envrc
 
+# Pixi
+.pixi/*
+!.pixi/config.toml
+
 # Gdal and other image formats
 *.tif
 *.xml
@@ -85,4 +89,5 @@ __pycache__/
 *.json
 
 # Coverage
+.coverage
 *.coverage
