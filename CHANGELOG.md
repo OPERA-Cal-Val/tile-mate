@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PEP 440](https://www.python.org/dev/peps/pep-0440/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- `DATASET_SHORTNAMES` in `README.md` was missing `umd_ocean_mask` and was not formatted as the list that is actually returned.
+
+### Changed
+- `README.md` now links the ASF GLO-30 HAND dataset description (https://glo-30-hand.s3.us-west-2.amazonaws.com/readme.html) and notes the tiles match the Copernicus GLO-30 DEM tiles used by `dem-stitcher`.
+- `README.md` describes `umd_ocean_mask` alongside the other supported datasets.
+
 ## [0.0.15] - 2025-07-06
 
 ### Added
