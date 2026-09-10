@@ -15,6 +15,17 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `README.md` now links the ASF GLO-30 HAND dataset description (https://glo-30-hand.s3.us-west-2.amazonaws.com/readme.html) and notes the tiles match the Copernicus GLO-30 DEM tiles used by `dem-stitcher`.
 - `README.md` describes `umd_ocean_mask` alongside the other supported datasets.
 
+## [0.0.16]
+
+### Changed
+- Environment management migrated from `conda`/`mamba` (`environment.yml`) to `pixi`, with all configuration in `pyproject.toml` under `[tool.pixi.*]`.
+- CI test matrix now uses `prefix-dev/setup-pixi` with one pixi environment per python version.
+- Static analysis no longer uses `ASFHyP3/actions/.github/workflows/reusable-ruff.yml`, which installs `environment.yml` via micromamba; `ruff` now runs from a dedicated, python-free `lint` pixi environment. The trufflehog secrets-analysis reusable workflow is unchanged.
+- Minimum supported python is now 3.11; python 3.14 is now supported and tested.
+
+### Removed
+- `environment.yml` and `tox.ini` (`flake8` configuration); `ruff` covers linting via `pixi run lint`/`pixi run format`.
+
 ## [0.0.15] - 2025-07-06
 
 ### Added
